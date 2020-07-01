@@ -1,38 +1,37 @@
 import React from "react";
-import { Text, Image, TextInput } from "react-native";
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, TextInput, View } from "react-native";
+import headerBackground from "../shared/assets/images/landscape.png";
 import TextComponent from "../shared/components/TextComponent";
-import headerBackground from "../shared/assets/images/landscape.png"
-import { SPACING_NORMAL, SPACING_SMALL, SPACING_TINY, SPACING_SMALLER } from "../shared/constants/Dimens";
-import { COLOR_BLACK, COLOR_WHITE, COLOR_PRIMARY } from "../shared/constants/Colors";
-import SearchIcon from "../shared/icons/search-icon.svg";
+import { COLOR_BLACK, COLOR_WHITE } from "../shared/constants/Colors";
+import { SPACING_SMALLER } from "../shared/constants/Dimens";
 import { FONT_BOLD } from "../shared/constants/Fonts";
+import SearchIcon from "../shared/icons/search-icon.svg";
 
 const HomePage = ({ navigation }) => {
-  return (<View style={styles.wrapper}>
-    <Image style={styles.image} source={headerBackground}/>
-    <TextComponent style={styles.headline}>Découverte</TextComponent>
-    <View style={styles.inputWrapper}>
-      <SearchIcon style={styles.icon} width="20" height="20"/>
-      <TextInput style={styles.input} placeholder="Où voulez vous aller ?"/>
+  return (
+    <View style={styles.wrapper}>
+      <Image style={styles.image} source={headerBackground} />
+      <TextComponent style={styles.headline}>Découverte</TextComponent>
+      <View style={styles.inputWrapper}>
+        <SearchIcon style={styles.icon} width="20" height="20" />
+        <TextInput style={styles.input} placeholder="Où voulez vous aller ?" />
+      </View>
     </View>
-    
-    
-  </View>);
+  );
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
+  wrapper: {
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
   },
   image: {
-    height: "30%",
+    height: 250,
     width: "100%",
     shadowColor: "#000",
     shadowOpacity: 1,
-    position: "absolute"
+    position: "absolute",
   },
   headline: {
     fontSize: 30,
@@ -40,10 +39,11 @@ const styles = StyleSheet.create({
     color: COLOR_WHITE,
     alignSelf: "flex-start",
     marginStart: "5%",
-    marginTop: "30%",
-    marginBottom: "8%",
+    marginTop: 150,
+    marginBottom: 35,
   },
   inputWrapper: {
+    display: "flex",
     marginTop: 0,
     backgroundColor: COLOR_WHITE,
     flexDirection: "row",
@@ -51,23 +51,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: SPACING_SMALLER,
     width: "90%",
-    
+
     shadowOpacity: 0.5,
     shadowRadius: 20,
     shadowColor: COLOR_BLACK,
-    shadowOffset:{
-      width:1,
-      height:1
-    }
-
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    elevation: 15,
   },
-  icon:{
+  icon: {
     marginStart: 10,
   },
-  input:{
-    paddingStart:10,
+  input: {
+    paddingHorizontal: 10,
     height: 50,
-  }
+    flex: 1,
+  },
 });
 
 export default HomePage;
