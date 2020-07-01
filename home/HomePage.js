@@ -4,7 +4,7 @@ import headerBackground from "../shared/assets/images/landscape.png";
 import TextComponent from "../shared/components/TextComponent";
 import { COLOR_BLACK, COLOR_WHITE } from "../shared/constants/Colors";
 import { SPACING_SMALLER } from "../shared/constants/Dimens";
-import { FONT_BOLD } from "../shared/constants/Fonts";
+import { FONT_BOLD, FONT_MEDIUM } from "../shared/constants/Fonts";
 import SearchIcon from "../shared/icons/search-icon.svg";
 
 const HomePage = ({ navigation }) => {
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   input: {
     paddingHorizontal: 10,
     height: 50,
+    fontFamily: FONT_MEDIUM,
     flex: 1,
   },
 });
