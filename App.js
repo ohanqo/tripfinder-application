@@ -2,7 +2,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useFonts } from "@use-expo/font";
 import { AppLoading } from "expo";
-import React from "react";
+import * as ScreenOrientation from "expo-screen-orientation";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import HomePage from "./home/HomePage";
 import OnboardingPage from "./onboarding/OnboardingPage";
@@ -17,6 +18,14 @@ import { PAGE_HOME, PAGE_ONBOARDING } from "./shared/constants/Pages";
 const Stack = createStackNavigator();
 
 export const App = () => {
+  useEffect(() => {
+    try {
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
   let [fontsLoaded] = useFonts({
     [FONT_BOLD]: require("./shared/assets/fonts/Metropolis-Bold.otf"),
     [FONT_LIGHT]: require("./shared/assets/fonts/Metropolis-Light.otf"),

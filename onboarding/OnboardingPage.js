@@ -22,7 +22,7 @@ const OnboardingPage = ({ navigation }) => {
       </TextComponent>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate(PAGE_HOME)}
+        onPress={() => navigation.replace(PAGE_HOME)}
       >
         <TextComponent style={styles.buttonText}>
           Commencer à voyager
