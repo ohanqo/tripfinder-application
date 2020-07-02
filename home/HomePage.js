@@ -12,10 +12,14 @@ import {
 } from "../shared/constants/Colors";
 import {
   FONT_SMALL,
+  SPACING_LARGE,
+  SPACING_LARGER,
+  SPACING_NORMAL,
   SPACING_SMALL,
   SPACING_SMALLER,
 } from "../shared/constants/Dimens";
 import { FONT_BOLD, FONT_LIGHT, FONT_MEDIUM } from "../shared/constants/Fonts";
+import ArrowRight from "../shared/icons/arrow-right.svg";
 import LocationIcon from "../shared/icons/location.svg";
 import SearchIcon from "../shared/icons/search-icon.svg";
 import CityService from "../shared/services/CityService";
@@ -53,7 +57,7 @@ const HomePage = ({ navigation }) => {
       <FlatList
         data={cities}
         horizontal={true}
-        showsHorizontalScrollIndicator={true}
+        showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
         style={styles.flatlist}
         renderItem={({ item }) => (
@@ -72,6 +76,13 @@ const HomePage = ({ navigation }) => {
           </TouchableOpacity>
         )}
       />
+
+      <TouchableOpacity style={styles.searchButton}>
+        <TextComponent style={styles.searchButtonText}>
+          Recherche personnalisée
+        </TextComponent>
+        <ArrowRight width="15" height="15" />
+      </TouchableOpacity>
 
       <StatusBar style="light" />
     </View>
@@ -173,6 +184,21 @@ const styles = StyleSheet.create({
     color: COLOR_PRIMARY,
     fontFamily: FONT_BOLD,
     fontSize: 12,
+  },
+  searchButton: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: COLOR_PRIMARY,
+    marginBottom: SPACING_LARGER,
+    paddingVertical: SPACING_NORMAL,
+    paddingHorizontal: SPACING_LARGE,
+    borderRadius: SPACING_SMALLER,
+  },
+  searchButtonText: {
+    color: COLOR_WHITE,
+    fontFamily: FONT_BOLD,
+    marginRight: SPACING_SMALL,
   },
 });
 
