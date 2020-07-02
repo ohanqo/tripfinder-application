@@ -1,3 +1,4 @@
+import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Image, StyleSheet, TextInput, View } from "react-native";
 import headerBackground from "../shared/assets/images/landscape.png";
@@ -16,6 +17,8 @@ const HomePage = ({ navigation }) => {
         <SearchIcon style={styles.icon} width="20" height="20" />
         <TextInput style={styles.input} placeholder="Où voulez vous aller ?" />
       </View>
+
+      <StatusBar style="light" />
     </View>
   );
 };
