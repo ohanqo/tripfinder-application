@@ -11,7 +11,7 @@ import {
   SPACING_SMALLER,
 } from "../shared/constants/Dimens";
 import { FONT_BOLD, FONT_MEDIUM } from "../shared/constants/Fonts";
-import { PAGE_HOME } from "../shared/constants/Pages";
+import { PAGE_NAVBAR } from "../shared/constants/Pages";
 
 const OnboardingPage = ({ navigation }) => {
   return (
@@ -22,7 +22,7 @@ const OnboardingPage = ({ navigation }) => {
       </TextComponent>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.replace(PAGE_HOME)}
+        onPress={() => navigation.replace(PAGE_NAVBAR)}
       >
         <TextComponent style={styles.buttonText}>
           Commencer à voyager

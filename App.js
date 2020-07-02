@@ -13,7 +13,9 @@ import {
   FONT_MEDIUM,
   FONT_REGULAR,
 } from "./shared/constants/Fonts";
-import { PAGE_HOME, PAGE_ONBOARDING } from "./shared/constants/Pages";
+import { PAGE_HOME, PAGE_ONBOARDING, PAGE_NAVBAR, PAGE_PROFIL } from "./shared/constants/Pages";
+import NavBar from "./navbar/NavBar";
+import ProfilePage from "./profile/ProfilePage";
 
 const Stack = createStackNavigator();
 
@@ -43,7 +45,7 @@ export const App = () => {
           initialRouteName={PAGE_ONBOARDING}
         >
           <Stack.Screen name={PAGE_ONBOARDING} component={OnboardingPage} />
-          <Stack.Screen name={PAGE_HOME} component={HomePage} />
+          <Stack.Screen name={PAGE_NAVBAR} component={NavBar} />
         </Stack.Navigator>
       </NavigationContainer>
     );
