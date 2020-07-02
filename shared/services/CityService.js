@@ -6,7 +6,7 @@ class CityService {
       return await HTTP.get("/cities");
     } catch (error) {
       console.log(error);
-      return "error";
+      return error;
     }
   }
 }

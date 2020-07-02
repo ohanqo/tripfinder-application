@@ -1,20 +1,25 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, TextInput, View, FlatList } from "react-native";
+import { FlatList, Image, StyleSheet, TextInput, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import headerBackground from "../shared/assets/images/landscape.png";
 import TextComponent from "../shared/components/TextComponent";
 import {
   COLOR_BLACK,
-  COLOR_WHITE,
   COLOR_GREY,
   COLOR_PRIMARY,
+  COLOR_WHITE,
 } from "../shared/constants/Colors";
-import { SPACING_SMALLER, FONT_SMALL, SPACING_LARGE, SPACING_MEDIUM, SPACING_SMALL } from "../shared/constants/Dimens";
-import { FONT_BOLD, FONT_MEDIUM, FONT_LIGHT } from "../shared/constants/Fonts";
-import SearchIcon from "../shared/icons/search-icon.svg";
+import {
+  FONT_SMALL,
+  SPACING_SMALL,
+  SPACING_SMALLER,
+} from "../shared/constants/Dimens";
+import { FONT_BOLD, FONT_LIGHT, FONT_MEDIUM } from "../shared/constants/Fonts";
 import LocationIcon from "../shared/icons/location.svg";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import CityService from "../shared/services/city.services";
+import SearchIcon from "../shared/icons/search-icon.svg";
+import CityService from "../shared/services/CityService";
+import { SERVER_URL } from "../shared/services/service";
 
 const HomePage = ({ navigation }) => {
   const [cities, setCities] = useState([]);
@@ -23,7 +28,6 @@ const HomePage = ({ navigation }) => {
     async function fetchData() {
       const response = await CityService.getCities();
       setCities(response);
-      console.log(cities);
     }
     fetchData();
   }, []);
@@ -50,13 +54,13 @@ const HomePage = ({ navigation }) => {
         data={cities}
         horizontal={true}
         showsHorizontalScrollIndicator={true}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         style={styles.flatlist}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.cityCard}>
             <Image
               style={styles.cityPicture}
-              source={{ uri: `http://94.238.22.29:8921/${item.filename}` }}
+              source={{ uri: `${SERVER_URL}${item.filename}` }}
             />
             <TextComponent style={styles.cityName}>{item.name}</TextComponent>
             <View style={styles.locationWrapper}>
@@ -146,7 +150,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SMALL,
     color: COLOR_GREY,
   },
-  flatlist:{
+  flatlist: {
     paddingLeft: 10,
   },
   cityCard: {
@@ -155,7 +159,7 @@ const styles = StyleSheet.create({
   cityPicture: {
     width: 110,
     height: 110,
-    borderRadius: SPACING_SMALL
+    borderRadius: SPACING_SMALL,
   },
   cityName: {
     fontFamily: FONT_BOLD,
