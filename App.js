@@ -18,9 +18,10 @@ import {
 import {
   PAGE_DESTINATION_DETAIL,
   PAGE_DESTINATION_LIST,
-  PAGE_HOME,
   PAGE_ONBOARDING,
+  PAGE_NAVBAR,
 } from "./shared/constants/Pages";
+import NavBar from "./navbar/NavBar";
 
 const Stack = createStackNavigator();
 
@@ -50,7 +51,7 @@ export const App = () => {
           initialRouteName={PAGE_ONBOARDING}
         >
           <Stack.Screen name={PAGE_ONBOARDING} component={OnboardingPage} />
-          <Stack.Screen name={PAGE_HOME} component={HomePage} />
+          <Stack.Screen name={PAGE_NAVBAR} component={NavBar} />
           <Stack.Screen
             name={PAGE_DESTINATION_LIST}
             component={DestinationListPage}

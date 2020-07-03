@@ -15,6 +15,9 @@
         "wasm",
         "svg"
       ]
+    },
+    "android": {
+      "softwareKeyboardLayoutMode": "pan"
     }
   }
 }
