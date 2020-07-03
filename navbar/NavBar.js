@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { PAGE_HOME, PAGE_PROFIL } from "../shared/constants/Pages";
 import HomePage from "../home/HomePage";
 import ProfilePage from "../profile/ProfilePage";
@@ -8,6 +8,8 @@ import ProfileSelected from "../shared/icons/profile-selected.svg";
 import Profile from "../shared/icons/profile.svg";
 import HomeSelected from "../shared/icons/home-selected.svg";
 import Home from "../shared/icons/home.svg";
+import OrangeDot from "../shared/icons/orange-dot.svg";
+import WaveBackGround from "../shared/icons/wave-navbar.svg";
 import TextComponent from "../shared/components/TextComponent";
 import {
   COLOR_PRIMARY,
@@ -15,7 +17,7 @@ import {
   COLOR_GREY,
   COLOR_WHITE,
 } from "../shared/constants/Colors";
-import { SPACING_SMALLER } from "../shared/constants/Dimens";
+import { SPACING_SMALLER, SPACING_LARGE, SPACING_TINY, SPACING_SMALL, SPACING_MEDIUM, SPACING_LARGER, SPACING_NORMAL } from "../shared/constants/Dimens";
 
 const NavBar = ({ navigation }) => {
   const Tab = createBottomTabNavigator();
@@ -24,6 +26,9 @@ const NavBar = ({ navigation }) => {
     <Tab.Navigator
       tabBarOptions={{
         showLabel: false,
+        style:{
+          borderTopWidth: 0,
+        }
       }}
     >
       <Tab.Screen
@@ -32,13 +37,15 @@ const NavBar = ({ navigation }) => {
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <HomeSelected
-                width="35"
-                height="35"
-                style={styles.optionSelected}
-              />
+              <View style={styles.optionSelected}>
+                <WaveBackGround style={styles.waveBackground} width="130" height="95"/>
+                <HomeSelected width="35" height="35" />
+                <OrangeDot style={styles.orangeDot} width="6" height="6"/>
+              </View>
             ) : (
-              <Home width="30" height="30" style={styles.optionUnselected} />
+              <View style={styles.optionUnselected}>
+                <Home width="30" height="30" />
+              </View>
             ),
         }}
       />
@@ -48,13 +55,15 @@ const NavBar = ({ navigation }) => {
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <ProfileSelected
-                width="35"
-                height="35"
-                style={styles.optionSelected}
-              />
+              <View style={styles.optionSelected}>
+                <WaveBackGround style={styles.waveBackground} width="130" height="95"/>
+                <ProfileSelected width="35" height="35" />
+                <OrangeDot style={styles.orangeDot} width="6" height="6"/>
+              </View>
             ) : (
-              <Profile width="30" height="30" style={styles.optionUnselected} />
+              <View style={styles.optionUnselected}>
+                <Profile width="30" height="30" />
+              </View>
             ),
         }}
       />
@@ -63,15 +72,21 @@ const NavBar = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  tabSelected: {
-    backgroundColor: COLOR_PRIMARY,
-  },
   optionSelected: {
-    marginBottom: SPACING_SMALLER,
+    alignItems: "center",
+    paddingVertical: SPACING_NORMAL,
+    minWidth: 100,
   },
   optionUnselected: {
     opacity: 0.7,
   },
+  orangeDot: {
+    marginVertical: SPACING_SMALL
+  },
+  waveBackground:{
+    position:"absolute",
+    bottom:0,
+  }
 });
 
 export default NavBar;
