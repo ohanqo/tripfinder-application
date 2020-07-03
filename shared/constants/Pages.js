@@ -1,2 +1,4 @@
-export const PAGE_HOME = "Home";
-export const PAGE_ONBOARDING = "Onboarding";
+export const PAGE_HOME = "PAGE_HOME";
+export const PAGE_ONBOARDING = "PAGE_ONBOARDING";
+export const PAGE_DESTINATION_LIST = "PAGE_DESTINATION_LIST";
+export const PAGE_DESTINATION_DETAIL = "PAGE_DESTINATION_DETAIL";

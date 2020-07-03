@@ -5,6 +5,8 @@ import { AppLoading } from "expo";
 import * as ScreenOrientation from "expo-screen-orientation";
 import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
+import DestinationDetailPage from "./destination-detail/DestinationDetailPage";
+import DestinationListPage from "./destination-list/DestinationListPage";
 import HomePage from "./home/HomePage";
 import OnboardingPage from "./onboarding/OnboardingPage";
 import {
@@ -13,7 +15,12 @@ import {
   FONT_MEDIUM,
   FONT_REGULAR,
 } from "./shared/constants/Fonts";
-import { PAGE_HOME, PAGE_ONBOARDING } from "./shared/constants/Pages";
+import {
+  PAGE_DESTINATION_DETAIL,
+  PAGE_DESTINATION_LIST,
+  PAGE_HOME,
+  PAGE_ONBOARDING,
+} from "./shared/constants/Pages";
 
 const Stack = createStackNavigator();
 
@@ -44,6 +51,14 @@ export const App = () => {
         >
           <Stack.Screen name={PAGE_ONBOARDING} component={OnboardingPage} />
           <Stack.Screen name={PAGE_HOME} component={HomePage} />
+          <Stack.Screen
+            name={PAGE_DESTINATION_LIST}
+            component={DestinationListPage}
+          />
+          <Stack.Screen
+            name={PAGE_DESTINATION_DETAIL}
+            component={DestinationDetailPage}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FlatList, Image, StyleSheet, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import headerBackground from "../shared/assets/images/landscape.png";
+import LocationComponent from "../shared/components/LocationComponent";
 import TextComponent from "../shared/components/TextComponent";
 import {
   COLOR_BLACK,
@@ -19,8 +20,8 @@ import {
   SPACING_SMALLER,
 } from "../shared/constants/Dimens";
 import { FONT_BOLD, FONT_LIGHT, FONT_MEDIUM } from "../shared/constants/Fonts";
+import { PAGE_DESTINATION_LIST } from "../shared/constants/Pages";
 import ArrowRight from "../shared/icons/arrow-right.svg";
-import LocationIcon from "../shared/icons/location.svg";
 import SearchIcon from "../shared/icons/search-icon.svg";
 import CityService from "../shared/services/CityService";
 import { SERVER_URL } from "../shared/services/service";
@@ -47,7 +48,10 @@ const HomePage = ({ navigation }) => {
 
       <View style={styles.forYouWrapper}>
         <TextComponent style={styles.title}>Pour vous</TextComponent>
-        <TouchableOpacity style={styles.btnSeeAllWrapper}>
+        <TouchableOpacity
+          style={styles.btnSeeAllWrapper}
+          onPress={() => navigation.navigate(PAGE_DESTINATION_LIST)}
+        >
           <TextComponent style={styles.btnSeeAll}>
             {"Tout voir >"}
           </TextComponent>
@@ -67,12 +71,10 @@ const HomePage = ({ navigation }) => {
               source={{ uri: `${SERVER_URL}${item.filename}` }}
             />
             <TextComponent style={styles.cityName}>{item.name}</TextComponent>
-            <View style={styles.locationWrapper}>
-              <LocationIcon width="15" height="15" />
-              <TextComponent style={styles.countryName}>
-                {item.country_name}
-              </TextComponent>
-            </View>
+            <LocationComponent
+              isWhite={false}
+              locationName={item.country_name}
+            />
           </TouchableOpacity>
         )}
       />
