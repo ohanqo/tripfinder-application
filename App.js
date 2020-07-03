@@ -13,9 +13,10 @@ import {
   FONT_MEDIUM,
   FONT_REGULAR,
 } from "./shared/constants/Fonts";
-import { PAGE_HOME, PAGE_ONBOARDING, PAGE_NAVBAR, PAGE_PROFIL } from "./shared/constants/Pages";
+import { PAGE_HOME, PAGE_ONBOARDING, PAGE_NAVBAR, PAGE_PROFIL, PAGE_CHOOSE_TYPES } from "./shared/constants/Pages";
 import NavBar from "./navbar/NavBar";
 import ProfilePage from "./profile/ProfilePage";
+import ChooseTypesPage from "./custom-search/ChooseTypesPage";
 
 const Stack = createStackNavigator();
 
@@ -46,6 +47,7 @@ export const App = () => {
         >
           <Stack.Screen name={PAGE_ONBOARDING} component={OnboardingPage} />
           <Stack.Screen name={PAGE_NAVBAR} component={NavBar} />
+          <Stack.Screen name={PAGE_CHOOSE_TYPES} component={ChooseTypesPage}/>
         </Stack.Navigator>
       </NavigationContainer>
     );
