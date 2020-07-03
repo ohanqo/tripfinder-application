@@ -13,6 +13,7 @@ import {
   SPACING_SMALLER,
 } from "../shared/constants/Dimens";
 import { FONT_BOLD, FONT_MEDIUM } from "../shared/constants/Fonts";
+import { PAGE_NAVBAR } from "../shared/constants/Pages";
 import { PAGE_HOME } from "../shared/constants/Pages";
 import { HAS_SEEN_ONBOARDING } from "../shared/constants/Preferences";
 
@@ -25,7 +26,7 @@ const OnboardingPage = ({ navigation }) => {
         HAS_SEEN_ONBOARDING,
       );
 
-      !!hasSeenOnboarding ? navigation.replace(PAGE_HOME) : setIsLoading(false);
+      !!hasSeenOnboarding ? navigation.replace(PAGE_NAVBAR) : setIsLoading(false);
     };
 
     shouldPassOnboarding();
@@ -33,7 +34,7 @@ const OnboardingPage = ({ navigation }) => {
 
   const onButtonClick = async () => {
     SecureStore.setItemAsync(HAS_SEEN_ONBOARDING, "true");
-    navigation.replace(PAGE_HOME);
+    navigation.replace(PAGE_NAVBAR);
   };
 
   const onboarding = () => (
