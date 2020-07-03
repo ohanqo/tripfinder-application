@@ -10,25 +10,16 @@ import HomeSelected from "../shared/icons/home-selected.svg";
 import Home from "../shared/icons/home.svg";
 import OrangeDot from "../shared/icons/orange-dot.svg";
 import WaveBackGround from "../shared/icons/wave-navbar.svg";
-import TextComponent from "../shared/components/TextComponent";
-import {
-  COLOR_PRIMARY,
-  COLOR_BLACK,
-  COLOR_GREY,
-  COLOR_WHITE,
-} from "../shared/constants/Colors";
-import { SPACING_SMALLER, SPACING_LARGE, SPACING_TINY, SPACING_SMALL, SPACING_MEDIUM, SPACING_LARGER, SPACING_NORMAL } from "../shared/constants/Dimens";
+import { SPACING_SMALL, SPACING_NORMAL } from "../shared/constants/Dimens";
 
-const NavBar = ({ navigation }) => {
+const NavBar = () => {
   const Tab = createBottomTabNavigator();
 
   return (
     <Tab.Navigator
       tabBarOptions={{
         showLabel: false,
-        style:{
-          borderTopWidth: 0,
-        }
+        style: styles.navBar,
       }}
     >
       <Tab.Screen
@@ -38,9 +29,13 @@ const NavBar = ({ navigation }) => {
           tabBarIcon: ({ focused }) =>
             focused ? (
               <View style={styles.optionSelected}>
-                <WaveBackGround style={styles.waveBackground} width="130" height="95"/>
+                <WaveBackGround
+                  style={styles.waveBackground}
+                  width="130"
+                  height="95"
+                />
                 <HomeSelected width="35" height="35" />
-                <OrangeDot style={styles.orangeDot} width="6" height="6"/>
+                <OrangeDot style={styles.orangeDot} width="6" height="6" />
               </View>
             ) : (
               <View style={styles.optionUnselected}>
@@ -56,9 +51,13 @@ const NavBar = ({ navigation }) => {
           tabBarIcon: ({ focused }) =>
             focused ? (
               <View style={styles.optionSelected}>
-                <WaveBackGround style={styles.waveBackground} width="130" height="95"/>
+                <WaveBackGround
+                  style={styles.waveBackground}
+                  width="130"
+                  height="95"
+                />
                 <ProfileSelected width="35" height="35" />
-                <OrangeDot style={styles.orangeDot} width="6" height="6"/>
+                <OrangeDot style={styles.orangeDot} width="6" height="6" />
               </View>
             ) : (
               <View style={styles.optionUnselected}>
@@ -72,6 +71,9 @@ const NavBar = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  navBar: {
+    borderTopWidth: 0,
+  },
   optionSelected: {
     alignItems: "center",
     paddingVertical: SPACING_NORMAL,
@@ -81,12 +83,12 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   orangeDot: {
-    marginVertical: SPACING_SMALL
+    marginVertical: SPACING_SMALL,
   },
-  waveBackground:{
-    position:"absolute",
-    bottom:0,
-  }
+  waveBackground: {
+    position: "absolute",
+    bottom: 0,
+  },
 });
 
 export default NavBar;
