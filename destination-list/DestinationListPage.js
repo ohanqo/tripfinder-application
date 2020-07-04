@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   destinationWrapper: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
   },
   listWrapper: {
     width: "40%",
