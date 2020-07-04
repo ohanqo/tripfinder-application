@@ -3,3 +3,5 @@ node_modules/**/*
 .DS_Store
 
 .expo/packager-info.json
+
+yarn-error.log

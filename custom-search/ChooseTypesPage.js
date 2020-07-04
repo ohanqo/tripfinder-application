@@ -1,23 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet, ImageBackground, FlatList } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ImageBackground,
+  FlatList,
+  Dimensions,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import TextComponent from "../shared/components/TextComponent";
 import {
   SPACING_LARGE,
   SPACING_LARGER,
-  FONT_HEADLINE,
-  FONT_LARGE,
   FONT_NORMAL,
-  FONT_SMALL,
   FONT_LARGER,
   SPACING_NORMAL,
   SPACING_MEDIUM,
+  SPACING_SMALL,
+  SPACING_SMALLER,
 } from "../shared/constants/Dimens";
 import { FONT_BOLD } from "../shared/constants/Fonts";
-import { COLOR_LIGHT_GREY, COLOR_BLACK, COLOR_GREY } from "../shared/constants/Colors";
+import {
+  COLOR_LIGHT_GREY,
+  COLOR_WHITE,
+  COLOR_PRIMARY,
+} from "../shared/constants/Colors";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import BackIcon from "../shared/icons/back.svg";
-
+import ChecBoxChecked from "../shared/icons/checkBox-checked.svg";
+import ChecBoxUnchecked from "../shared/icons/checkBox-unchecked.svg";
 import beach from "../shared/assets/images/beach.jpg";
 import culture from "../shared/assets/images/culture.jpg";
 import mountain from "../shared/assets/images/mountain.jpg";
@@ -25,8 +36,30 @@ import nightLiving from "../shared/assets/images/night-living.jpg";
 import sport from "../shared/assets/images/sport.jpg";
 
 const ChooseTypesPage = ({ navigation }) => {
+  const [types, setTypes] = useState([]);
+
+  useEffect(() => {
+    setTypes([
+      { id: 1, name: "Montagne", selected: false, image: mountain },
+      { id: 2, name: "Plage", selected: false, image: beach },
+      { id: 3, name: "Vie Nocturne", selected: false, image: nightLiving },
+      { id: 4, name: "Culture", selected: false, image: culture },
+      { id: 5, name: "Sport", selected: false, image: sport },
+    ]);
+  }, []);
+
+  let pressType = (type) => {
+    console.log(types);
+    let index = types.indexOf(type);
+    type.selected = type.selected ? false : true;
+    let newTypes = JSON.parse(JSON.stringify(types));
+    newTypes[index] = type;
+    setTypes(newTypes);
+    console.log(types);
+  };
+
   return (
-    <View style={styles.globalWrapper}>
+    <ScrollView style={styles.globalWrapper}>
       <StatusBar style="dark" />
 
       <View style={styles.headerWrapper}>
@@ -44,28 +77,55 @@ const ChooseTypesPage = ({ navigation }) => {
       </View>
 
       <TextComponent style={styles.subHeadline}>
-        Sélectionnez autant de centres d'intérret que vous le souhaitez
+        Sélectionnez autant de centres d'intérêt que vous le souhaitez
       </TextComponent>
+
       <FlatList
         data={types}
         horizontal={false}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
-        style={styles.flatList}
-        contentContainerStyle={styles.flatListStyle}
+        style={styles.flatListStyle}
+        columnWrapperStyle={styles.flatListRowStyle}
         numColumns="2"
-        renderItem={({item}) => (
-          <TouchableOpacity style={styles.typeSelect}>
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.typeSelect}
+            onPress={() => pressType(item)}
+          >
             <ImageBackground
-                source={item.image}
-                style={styles.typeImage}
-                imageStyle={styles.typeImage}
-              />
-            <TextComponent>{item.name}</TextComponent>
+              source={item.image}
+              style={styles.typeImage}
+              imageStyle={styles.typeImage}
+            >
+              <View style={styles.typeInfoWrapper}>
+                <LinearGradient
+                  colors={["transparent", "rgba(0,0.2,0.5,0.8)"]}
+                  style={styles.typeInfoLineWrapper}
+                >
+                  <TextComponent style={styles.typeLabel}>
+                    {item.name}
+                  </TextComponent>
+                  {item.selected ? (
+                    <ChecBoxChecked width="20" height="20" />
+                  ) : (
+                    <ChecBoxUnchecked width="20" height="20" />
+                  )}
+                </LinearGradient>
+              </View>
+            </ImageBackground>
           </TouchableOpacity>
         )}
       />
-    </View>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          null;
+        }}
+      >
+        <TextComponent style={styles.buttonText}>Suivant</TextComponent>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
@@ -96,35 +156,54 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingHorizontal: SPACING_LARGER,
   },
-  flatList: {
-    width: "100%",
-    
-    marginTop: SPACING_LARGE,
-    backgroundColor: COLOR_GREY,
-  },
   flatListStyle: {
-    display: "flex",
-    alignContent: "space-around",
+    marginTop: SPACING_LARGE,
+  },
+  flatListRowStyle: {
+    flex: 1,
+    justifyContent: "space-evenly",
+    marginBottom: SPACING_SMALL,
   },
   typeSelect: {
-    width: 150,
-    height: 150,
-    resizeMode: "cover",
+    width: Dimensions.get("window").width / 2 - 20,
+    height: Dimensions.get("window").width / 2 - 20,
     borderRadius: SPACING_NORMAL,
-    
   },
   typeImage: {
     flex: 1,
     borderRadius: SPACING_NORMAL,
   },
+  typeInfoWrapper: {
+    display: "flex",
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  typeInfoLineWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: SPACING_SMALL,
+    paddingVertical: SPACING_SMALL,
+    borderRadius: SPACING_NORMAL,
+  },
+  typeLabel: {
+    color: COLOR_WHITE,
+    fontFamily: FONT_BOLD,
+  },
+  button: {
+    backgroundColor: COLOR_PRIMARY,
+    marginBottom: SPACING_NORMAL,
+    paddingVertical: SPACING_NORMAL,
+    paddingHorizontal: SPACING_LARGE,
+    borderRadius: SPACING_SMALLER,
+    marginHorizontal: SPACING_NORMAL,
+  },
+  buttonText: {
+    color: COLOR_WHITE,
+    fontFamily: FONT_BOLD,
+    textAlign: "center",
+  },
 });
-
-const types = [
-  { id: 1, name: "Montagne", image: mountain },
-  { id: 2, name: "Plage", image: beach },
-  { id: 3, name: "Vie Nocturne", image: nightLiving },
-  { id: 4, name: "Culture", image: culture },
-  { id: 5, name: "Sport", image: sport },
-];
 
 export default ChooseTypesPage;
