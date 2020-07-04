@@ -34,6 +34,7 @@ import culture from "../shared/assets/images/culture.jpg";
 import mountain from "../shared/assets/images/mountain.jpg";
 import nightLiving from "../shared/assets/images/night-living.jpg";
 import sport from "../shared/assets/images/sport.jpg";
+import { PAGE_CHOOSE_TEMPERATURE } from "../shared/constants/Pages";
 
 const ChooseTypesPage = ({ navigation }) => {
   const [types, setTypes] = useState([]);
@@ -49,13 +50,11 @@ const ChooseTypesPage = ({ navigation }) => {
   }, []);
 
   let pressType = (type) => {
-    console.log(types);
     let index = types.indexOf(type);
     type.selected = type.selected ? false : true;
     let newTypes = JSON.parse(JSON.stringify(types));
     newTypes[index] = type;
     setTypes(newTypes);
-    console.log(types);
   };
 
   return (
@@ -120,10 +119,14 @@ const ChooseTypesPage = ({ navigation }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          null;
+          navigation.navigate(PAGE_CHOOSE_TEMPERATURE);
         }}
       >
-        <TextComponent style={styles.buttonText}>Suivant</TextComponent>
+        <TextComponent
+          style={styles.buttonText}
+        >
+          Suivant
+        </TextComponent>
       </TouchableOpacity>
     </ScrollView>
   );

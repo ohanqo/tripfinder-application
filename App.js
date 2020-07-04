@@ -21,10 +21,11 @@ import {
   PAGE_ONBOARDING,
   PAGE_NAVBAR,
   PAGE_CHOOSE_TYPES,
+  PAGE_CHOOSE_TEMPERATURE,
 } from "./shared/constants/Pages";
 import NavBar from "./navbar/NavBar";
-import ProfilePage from "./profile/ProfilePage";
 import ChooseTypesPage from "./custom-search/ChooseTypesPage";
+import ChooseTemperaturePage from "./custom-search/ChooseTemperaturePage";
 
 const Stack = createStackNavigator();
 
@@ -62,6 +63,10 @@ export const App = () => {
           <Stack.Screen
             name={PAGE_DESTINATION_DETAIL}
             component={DestinationDetailPage}
+          />
+          <Stack.Screen
+            name={PAGE_CHOOSE_TEMPERATURE}
+            component={ChooseTemperaturePage}
           />
           <Stack.Screen name={PAGE_CHOOSE_TYPES} component={ChooseTypesPage}/>
         </Stack.Navigator>
