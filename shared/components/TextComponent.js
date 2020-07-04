@@ -5,13 +5,11 @@ import { FONT_NORMAL } from "../constants/Dimens";
 import { FONT_REGULAR } from "../constants/Fonts";
 
 const TextComponent = ({ children, style }) => {
-  return (
-    <Text style={[defaultStyle.buttonText, { ...style }]}>{children}</Text>
-  );
+  return <Text style={[defaultStyle.text, { ...style }]}>{children}</Text>;
 };
 
 const defaultStyle = StyleSheet.create({
-  buttonText: {
+  text: {
     color: COLOR_BLACK,
     fontSize: FONT_NORMAL,
     fontFamily: FONT_REGULAR,

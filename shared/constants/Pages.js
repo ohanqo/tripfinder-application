@@ -1,5 +1,7 @@
-export const PAGE_HOME = "Home";
-export const PAGE_ONBOARDING = "Onboarding";
-export const PAGE_NAVBAR = "NavBar";
-export const PAGE_PROFIL = "Profile";
-export const PAGE_CHOOSE_TYPES = "ChooseTypes";
+export const PAGE_HOME = "PAGE_HOME";
+export const PAGE_ONBOARDING = "PAGE_ONBOARDING";
+export const PAGE_DESTINATION_LIST = "PAGE_DESTINATION_LIST";
+export const PAGE_DESTINATION_DETAIL = "PAGE_DESTINATION_DETAIL";
+export const PAGE_PROFIL = "PAGE_PROFIL";
+export const PAGE_NAVBAR = "PAGE_NAVBAR";
+export const PAGE_CHOOSE_TYPES = "PAGE_CHOOSE_TYPES";
