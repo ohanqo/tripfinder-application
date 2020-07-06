@@ -13,11 +13,31 @@ import {
 } from "../shared/constants/Dimens";
 import BackIcon from "../shared/icons/back.svg";
 import SliderLabels from "./SliderLabels";
-import { COLOR_PRIMARY, COLOR_WHITE, COLOR_LIGHT_GREY } from "../shared/constants/Colors";
+import {
+  COLOR_PRIMARY,
+  COLOR_WHITE,
+  COLOR_LIGHT_GREY,
+} from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
 import { PAGE_CHOOSE_CONTINENT } from "../shared/constants/Pages";
 
-const ChooseBudgetPage = ({ navigation }) => {
+const ChooseBudgetPage = ({ route, navigation }) => {
+  const [minBudget, setMinBudget] = useState(0);
+  const [maxBudget, setMaxBudget] = useState(600);
+  let { filters } = route.params;
+
+  const changeBudget = (e) => {
+    setMinBudget(e[0]);
+    setMaxBudget(e[1]);
+  };
+
+  const goToNextPage = () => {
+    filters.minBudget = minBudget;
+    filters.maxBudget = maxBudget;
+
+    navigation.navigate(PAGE_CHOOSE_CONTINENT, { filters: filters });
+  };
+
   return (
     <View style={styles.globalWrapper}>
       <View style={styles.headerWrapper}>
@@ -39,15 +59,19 @@ const ChooseBudgetPage = ({ navigation }) => {
         values={[0, 600]}
         max={600}
         customLabel={(e) => {
-          return <SliderLabels props={e} isEuros={true}/>;
+          return <SliderLabels props={e} isEuros={true} />;
+        }}
+        onValuesChangeFinish={(e) => {
+          changeBudget(e);
         }}
       />
 
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.navigate(PAGE_CHOOSE_CONTINENT);
+          goToNextPage();
         }}
+        
       >
         <TextComponent style={styles.buttonText}>Suivant</TextComponent>
       </TouchableOpacity>

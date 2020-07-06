@@ -57,6 +57,18 @@ const ChooseTypesPage = ({ navigation }) => {
     setTypes(newTypes);
   };
 
+  let goToNextPage = () => {
+    let chosenTypes = [];
+    for (const type of types) {
+      if (type.selected) {
+        chosenTypes.push(type.name);
+      }
+    }
+    navigation.navigate(PAGE_CHOOSE_TEMPERATURE, {
+      filters: { types: chosenTypes },
+    });
+  };
+
   return (
     <ScrollView style={styles.globalWrapper}>
       <StatusBar style="dark" />
@@ -119,7 +131,7 @@ const ChooseTypesPage = ({ navigation }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.navigate(PAGE_CHOOSE_TEMPERATURE);
+          goToNextPage();
         }}
       >
         <TextComponent style={styles.buttonText}>Suivant</TextComponent>

@@ -19,8 +19,9 @@ import {
 } from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
 
-const ChooseContinentPage = ({ navigation }) => {
+const ChooseContinentPage = ({ route, navigation }) => {
   const [continents, setContinents] = useState([{}]);
+  let { filters } = route.params;
 
   useEffect(() => {
     setContinents([
@@ -30,6 +31,19 @@ const ChooseContinentPage = ({ navigation }) => {
       { id: 4, name: "Asie", selected: true },
     ]);
   }, []);
+
+  const goToNextPage = () => {
+    let continentsSelected = [];
+
+    for (const continent of continents) {
+      if (continent.selected) {
+        continentsSelected.push(continent.name);
+      }
+    }
+    filters.continent = continentsSelected;
+    console.log(JSON.stringify(filters));
+    //navigation.navigate(PAGE_CHOOSE_CONTINENT, { filters: filters });
+  };
 
   let pressContient = (continent) => {
     let index = continents.indexOf(continent);
@@ -62,7 +76,10 @@ const ChooseContinentPage = ({ navigation }) => {
               <TextComponent style={styles.continentName}>
                 {item.name}
               </TextComponent>
-              <Switch value={item.selected} onValueChange={() => pressContient(item)}/>
+              <Switch
+                value={item.selected}
+                onValueChange={() => pressContient(item)}
+              />
             </View>
           );
         })}
@@ -71,10 +88,12 @@ const ChooseContinentPage = ({ navigation }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.navigate(PAGE_CHOOSE_TEMPERATURE);
+          goToNextPage();
         }}
       >
-        <TextComponent style={styles.buttonText}>Voir les résultats</TextComponent>
+        <TextComponent style={styles.buttonText}>
+          Voir les résultats
+        </TextComponent>
       </TouchableOpacity>
     </View>
   );
