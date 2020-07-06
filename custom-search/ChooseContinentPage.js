@@ -15,11 +15,9 @@ import SliderLabels from "./SliderLabelsComponent";
 import {
   COLOR_PRIMARY,
   COLOR_WHITE,
-  COLOR_LIGHT_GREY,
 } from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
 import { PAGE_SEARCH_RESULTS } from "../shared/constants/Pages";
-import { YellowBox } from "react-native";
 import HeaderComponent from "../shared/components/HeaderComponent";
 
 const ChooseContinentPage = ({ route, navigation }) => {

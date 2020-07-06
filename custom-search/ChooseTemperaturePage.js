@@ -7,12 +7,9 @@ import {
   SPACING_LARGE,
   SPACING_NORMAL,
   FONT_LARGER,
-  SPACING_MEDIUM,
   SPACING_LARGER,
   SPACING_SMALLER,
-  SPACING_SMALL,
 } from "../shared/constants/Dimens";
-import BackIcon from "../shared/icons/back.svg";
 import SliderLabelsComponent from "./SliderLabelsComponent";
 import { COLOR_PRIMARY, COLOR_WHITE } from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
@@ -76,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "space-between",
-    
+
   },
   headline: {
     fontSize: FONT_LARGER,

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Dimensions, Switch } from "react-native";
+import React, { useEffect } from "react";
+import { View, StyleSheet, Dimensions } from "react-native";
 import TextComponent from "../shared/components/TextComponent";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {
@@ -15,7 +15,6 @@ import SliderLabels from "./SliderLabelsComponent";
 import {
   COLOR_PRIMARY,
   COLOR_WHITE,
-  COLOR_LIGHT_GREY,
 } from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
 
