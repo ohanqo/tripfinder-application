@@ -20,7 +20,6 @@ import {
   PAGE_DESTINATION_LIST,
   PAGE_NAVBAR,
   PAGE_ONBOARDING,
-  PAGE_NAVBAR,
   PAGE_CHOOSE_TYPES,
   PAGE_CHOOSE_TEMPERATURE,
   PAGE_CHOOSE_BUDGET,
@@ -71,21 +70,25 @@ export const App = () => {
               name={PAGE_DESTINATION_DETAIL}
               component={DestinationDetailPage}
             />
+            <Stack.Screen
+              name={PAGE_CHOOSE_TEMPERATURE}
+              component={ChooseTemperaturePage}
+            />
+            <Stack.Screen
+              name={PAGE_CHOOSE_BUDGET}
+              component={ChooseBudgetPage}
+            />
+            <Stack.Screen
+              name={PAGE_CHOOSE_CONTINENT}
+              component={ChooseContinentPage}
+            />
+            <Stack.Screen
+              name={PAGE_CHOOSE_TYPES}
+              component={ChooseTypesPage}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </StoreProvider>
-          <Stack.Screen
-            name={PAGE_CHOOSE_TEMPERATURE}
-            component={ChooseTemperaturePage}
-          />
-          <Stack.Screen
-            name={PAGE_CHOOSE_BUDGET}
-            component={ChooseBudgetPage}
-          />
-          <Stack.Screen
-            name={PAGE_CHOOSE_CONTINENT}
-            component={ChooseContinentPage}
-          />
     );
   }
 };

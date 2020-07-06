@@ -28,7 +28,7 @@ const ChooseTemperaturePage = ({ route, navigation }) => {
 
   const changeTmp = (e) => {
     setMinTmp(e[0]);
-    setMinTmp(e[1]);
+    setMaxTmp(e[1]);
   };
 
   const goToNextPage = () => {
