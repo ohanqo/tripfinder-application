@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FlatList, Image, StyleSheet, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import headerBackground from "../shared/assets/images/landscape.png";
@@ -21,6 +21,8 @@ import {
 } from "../shared/constants/Dimens";
 import { FONT_BOLD, FONT_LIGHT, FONT_MEDIUM } from "../shared/constants/Fonts";
 import { PAGE_DESTINATION_LIST } from "../shared/constants/Pages";
+import { SET_CITIES } from "../shared/constants/Types";
+import { StoreContext } from "../shared/context/Context";
 import ArrowRight from "../shared/icons/arrow-right.svg";
 import SearchIcon from "../shared/icons/search-icon.svg";
 import CityService from "../shared/services/CityService";
@@ -29,12 +31,17 @@ import { PAGE_CHOOSE_TYPES } from "../shared/constants/Pages";
 
 const HomePage = ({ navigation }) => {
   const [cities, setCities] = useState([]);
+  const { dispatch } = useContext(StoreContext);
 
   useEffect(() => {
     async function fetchData() {
       const response = await CityService.getCities();
-      setCities(response);
+      dispatch({ type: SET_CITIES, payload: response });
+
+      const firstCities = response.filter((_, index) => index < 5);
+      setCities(firstCities);
     }
+
     fetchData();
   }, []);
 

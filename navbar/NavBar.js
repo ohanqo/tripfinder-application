@@ -1,16 +1,16 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { PAGE_HOME, PAGE_PROFIL } from "../shared/constants/Pages";
 import HomePage from "../home/HomePage";
 import ProfilePage from "../profile/ProfilePage";
-import ProfileSelected from "../shared/icons/profile-selected.svg";
-import Profile from "../shared/icons/profile.svg";
+import { SPACING_NORMAL, SPACING_SMALL } from "../shared/constants/Dimens";
+import { PAGE_HOME, PAGE_PROFIL } from "../shared/constants/Pages";
 import HomeSelected from "../shared/icons/home-selected.svg";
 import Home from "../shared/icons/home.svg";
 import OrangeDot from "../shared/icons/orange-dot.svg";
+import ProfileSelected from "../shared/icons/profile-selected.svg";
+import Profile from "../shared/icons/profile.svg";
 import WaveBackGround from "../shared/icons/wave-navbar.svg";
-import { SPACING_SMALL, SPACING_NORMAL } from "../shared/constants/Dimens";
 
 const NavBar = () => {
   const Tab = createBottomTabNavigator();
