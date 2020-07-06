@@ -28,7 +28,7 @@ import {
 } from "./shared/constants/Pages";
 import { StoreProvider } from "./shared/context/Context";
 import NavBar from "./navbar/NavBar";
-import ChooseTypesPage from "./custom-search/ChooseTypesPage";
+import ChooseTypesPage from "./custom-search/types/ChooseTypesPage";
 import ChooseTemperaturePage from "./custom-search/ChooseTemperaturePage";
 import ChooseBudgetPage from "./custom-search/ChooseBudgetPage";
 import ChooseContinentPage from "./custom-search/ChooseContinentPage";

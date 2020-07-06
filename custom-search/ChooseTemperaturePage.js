@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import TextComponent from "../shared/components/TextComponent";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -10,16 +10,14 @@ import {
   SPACING_MEDIUM,
   SPACING_LARGER,
   SPACING_SMALLER,
+  SPACING_SMALL,
 } from "../shared/constants/Dimens";
 import BackIcon from "../shared/icons/back.svg";
-import SliderLabels from "./SliderLabels";
-import {
-  COLOR_PRIMARY,
-  COLOR_WHITE,
-  COLOR_LIGHT_GREY,
-} from "../shared/constants/Colors";
+import SliderLabelsComponent from "./SliderLabelsComponent";
+import { COLOR_PRIMARY, COLOR_WHITE } from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
 import { PAGE_CHOOSE_BUDGET } from "../shared/constants/Pages";
+import HeaderComponent from "../shared/components/HeaderComponent";
 
 const ChooseTemperaturePage = ({ route, navigation }) => {
   const [minTmp, setMinTmp] = useState(0);
@@ -40,26 +38,18 @@ const ChooseTemperaturePage = ({ route, navigation }) => {
 
   return (
     <View style={styles.globalWrapper}>
-      <View style={styles.headerWrapper}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <BackIcon width={SPACING_MEDIUM} height={SPACING_MEDIUM} />
-        </TouchableOpacity>
+      <HeaderComponent navigation={navigation}>
         <TextComponent style={styles.headline}>
           Choisissez votre température idéale
         </TextComponent>
-      </View>
+      </HeaderComponent>
 
       <MultiSlider
         enableLabel={true}
         values={[0, 40]}
         max={40}
         customLabel={(e) => {
-          return <SliderLabels props={e} isEuros={false} />;
+          return <SliderLabelsComponent props={e} isEuros={false} />;
         }}
         onValuesChangeFinish={(e) => {
           changeTmp(e);
@@ -82,29 +72,16 @@ const styles = StyleSheet.create({
   globalWrapper: {
     marginTop: SPACING_LARGE,
     flex: 1,
-    alignItems: "center",
     display: "flex",
+    alignItems: "center",
     flexDirection: "column",
     justifyContent: "space-between",
-  },
-  backButton: {
-    alignSelf: "flex-start",
-    paddingRight: SPACING_NORMAL,
-  },
-  headerWrapper: {
-    display: "flex",
-    width: "100%",
-    flexDirection: "row",
-    paddingHorizontal: SPACING_NORMAL,
-    justifyContent: "space-between",
-    alignItems: "center",
+    
   },
   headline: {
     fontSize: FONT_LARGER,
     textAlign: "center",
     marginVertical: SPACING_LARGE,
-    marginRight: SPACING_LARGER,
-    paddingRight: SPACING_LARGE,
   },
   button: {
     backgroundColor: COLOR_PRIMARY,

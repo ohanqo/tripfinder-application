@@ -11,7 +11,7 @@ import {
   SPACING_SMALLER,
 } from "../shared/constants/Dimens";
 import BackIcon from "../shared/icons/back.svg";
-import SliderLabels from "./SliderLabels";
+import SliderLabels from "./SliderLabelsComponent";
 import {
   COLOR_PRIMARY,
   COLOR_WHITE,
@@ -19,6 +19,8 @@ import {
 } from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
 import { PAGE_SEARCH_RESULTS } from "../shared/constants/Pages";
+import { YellowBox } from "react-native";
+import HeaderComponent from "../shared/components/HeaderComponent";
 
 const ChooseContinentPage = ({ route, navigation }) => {
   const [continents, setContinents] = useState([{}]);
@@ -56,24 +58,17 @@ const ChooseContinentPage = ({ route, navigation }) => {
 
   return (
     <View style={styles.globalWrapper}>
-      <View style={styles.headerWrapper}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <BackIcon width={SPACING_MEDIUM} height={SPACING_MEDIUM} />
-        </TouchableOpacity>
+
+      <HeaderComponent navigation={navigation}>
         <TextComponent style={styles.headline}>
           Choisissez les continents qui vous intéressent
         </TextComponent>
-      </View>
 
+      </HeaderComponent>
       <View style={styles.continentsWrapper}>
-        {continents.map((item) => {
+        {continents.map((item, index) => {
           return (
-            <View style={styles.continentWrapper} key={item.id}>
+            <View style={styles.continentWrapper} key={index}>
               <TextComponent style={styles.continentName}>
                 {item.name}
               </TextComponent>
@@ -109,24 +104,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
   },
-  backButton: {
-    alignSelf: "flex-start",
-    paddingRight: SPACING_NORMAL,
-  },
-  headerWrapper: {
-    display: "flex",
-    width: "100%",
-    flexDirection: "row",
-    paddingHorizontal: SPACING_NORMAL,
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
+
   headline: {
     fontSize: FONT_LARGER,
     textAlign: "center",
     marginVertical: SPACING_LARGE,
-    marginRight: SPACING_LARGER,
-    paddingRight: SPACING_LARGE,
   },
   continentsWrapper: {
     display: "flex",

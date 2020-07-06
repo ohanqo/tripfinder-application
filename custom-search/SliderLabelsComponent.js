@@ -7,7 +7,7 @@ import { FONT_LARGE } from "../shared/constants/Dimens";
 
 const sliderRadius = 3;
 const width = 50;
-export default class SliderLabels extends React.Component {
+export default class SliderLabelsComponent extends React.Component {
   static propTypes = {
     oneMarkerValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     twoMarkerValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

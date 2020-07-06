@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import TextComponent from "../shared/components/TextComponent";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -10,16 +10,14 @@ import {
   SPACING_MEDIUM,
   SPACING_LARGER,
   SPACING_SMALLER,
+  SPACING_SMALL,
 } from "../shared/constants/Dimens";
 import BackIcon from "../shared/icons/back.svg";
-import SliderLabels from "./SliderLabels";
-import {
-  COLOR_PRIMARY,
-  COLOR_WHITE,
-  COLOR_LIGHT_GREY,
-} from "../shared/constants/Colors";
+import SliderLabelsComponent from "./SliderLabelsComponent";
+import { COLOR_PRIMARY, COLOR_WHITE } from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
 import { PAGE_CHOOSE_CONTINENT } from "../shared/constants/Pages";
+import HeaderComponent from "../shared/components/HeaderComponent";
 
 const ChooseBudgetPage = ({ route, navigation }) => {
   const [minBudget, setMinBudget] = useState(0);
@@ -40,26 +38,18 @@ const ChooseBudgetPage = ({ route, navigation }) => {
 
   return (
     <View style={styles.globalWrapper}>
-      <View style={styles.headerWrapper}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <BackIcon width={SPACING_MEDIUM} height={SPACING_MEDIUM} />
-        </TouchableOpacity>
+      <HeaderComponent navigation={navigation}>
         <TextComponent style={styles.headline}>
           Choisissez votre budget pour le week-end
         </TextComponent>
-      </View>
+      </HeaderComponent>
 
       <MultiSlider
         enableLabel={true}
         values={[0, 600]}
         max={600}
         customLabel={(e) => {
-          return <SliderLabels props={e} isEuros={true} />;
+          return <SliderLabelsComponent props={e} isEuros={true} />;
         }}
         onValuesChangeFinish={(e) => {
           changeBudget(e);
@@ -71,7 +61,6 @@ const ChooseBudgetPage = ({ route, navigation }) => {
         onPress={() => {
           goToNextPage();
         }}
-        
       >
         <TextComponent style={styles.buttonText}>Suivant</TextComponent>
       </TouchableOpacity>
@@ -87,6 +76,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    paddingHorizontal: SPACING_SMALL,
   },
   backButton: {
     alignSelf: "flex-start",
@@ -104,8 +94,6 @@ const styles = StyleSheet.create({
     fontSize: FONT_LARGER,
     textAlign: "center",
     marginVertical: SPACING_LARGE,
-    marginRight: SPACING_LARGER,
-    paddingRight: SPACING_LARGE,
   },
   button: {
     backgroundColor: COLOR_PRIMARY,

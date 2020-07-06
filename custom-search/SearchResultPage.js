@@ -11,7 +11,7 @@ import {
   SPACING_SMALLER,
 } from "../shared/constants/Dimens";
 import BackIcon from "../shared/icons/back.svg";
-import SliderLabels from "./SliderLabels";
+import SliderLabels from "./SliderLabelsComponent";
 import {
   COLOR_PRIMARY,
   COLOR_WHITE,
