@@ -24,6 +24,7 @@ import {
   PAGE_CHOOSE_TEMPERATURE,
   PAGE_CHOOSE_BUDGET,
   PAGE_CHOOSE_CONTINENT,
+  PAGE_SEARCH_RESULTS,
 } from "./shared/constants/Pages";
 import { StoreProvider } from "./shared/context/Context";
 import NavBar from "./navbar/NavBar";
@@ -31,6 +32,7 @@ import ChooseTypesPage from "./custom-search/ChooseTypesPage";
 import ChooseTemperaturePage from "./custom-search/ChooseTemperaturePage";
 import ChooseBudgetPage from "./custom-search/ChooseBudgetPage";
 import ChooseContinentPage from "./custom-search/ChooseContinentPage";
+import SearchResultPage from "./custom-search/SearchResultPage";
 
 const Stack = createStackNavigator();
 
@@ -85,6 +87,10 @@ export const App = () => {
             <Stack.Screen
               name={PAGE_CHOOSE_TYPES}
               component={ChooseTypesPage}
+            />
+            <Stack.Screen
+              name={PAGE_SEARCH_RESULTS}
+              component={SearchResultPage}
             />
           </Stack.Navigator>
         </NavigationContainer>

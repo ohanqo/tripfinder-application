@@ -18,41 +18,13 @@ import {
   COLOR_LIGHT_GREY,
 } from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
-import { PAGE_SEARCH_RESULTS } from "../shared/constants/Pages";
 
-const ChooseContinentPage = ({ route, navigation }) => {
-  const [continents, setContinents] = useState([{}]);
+const SearchResultPage = ({ route, navigation }) => {
   let { filters } = route.params;
 
   useEffect(() => {
-    setContinents([
-      { id: 1, name: "Europe", selected: true },
-      { id: 2, name: "Amérique du Nord", selected: true },
-      { id: 3, name: "Amérique du Sud", selected: true },
-      { id: 4, name: "Asie", selected: true },
-    ]);
+    console.log(filters);
   }, []);
-
-  const goToNextPage = () => {
-    let continentsSelected = [];
-
-    for (const continent of continents) {
-      if (continent.selected) {
-        continentsSelected.push(continent.name);
-      }
-    }
-    filters.continent = continentsSelected;
-    console.log(JSON.stringify(filters));
-    navigation.navigate(PAGE_SEARCH_RESULTS, { filters: filters });
-  };
-
-  let pressContient = (continent) => {
-    let index = continents.indexOf(continent);
-    continent.selected = continent.selected ? false : true;
-    let newContinents = JSON.parse(JSON.stringify(continents));
-    newContinents[index] = continent;
-    setContinents(newContinents);
-  };
 
   return (
     <View style={styles.globalWrapper}>
@@ -66,24 +38,8 @@ const ChooseContinentPage = ({ route, navigation }) => {
           <BackIcon width={SPACING_MEDIUM} height={SPACING_MEDIUM} />
         </TouchableOpacity>
         <TextComponent style={styles.headline}>
-          Choisissez les continents qui vous intéressent
+          Résultats de votre recherche
         </TextComponent>
-      </View>
-
-      <View style={styles.continentsWrapper}>
-        {continents.map((item) => {
-          return (
-            <View style={styles.continentWrapper} key={item.id}>
-              <TextComponent style={styles.continentName}>
-                {item.name}
-              </TextComponent>
-              <Switch
-                value={item.selected}
-                onValueChange={() => pressContient(item)}
-              />
-            </View>
-          );
-        })}
       </View>
 
       <TouchableOpacity
@@ -156,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChooseContinentPage;
+export default SearchResultPage;
