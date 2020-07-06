@@ -122,11 +122,7 @@ const ChooseTypesPage = ({ navigation }) => {
           navigation.navigate(PAGE_CHOOSE_TEMPERATURE);
         }}
       >
-        <TextComponent
-          style={styles.buttonText}
-        >
-          Suivant
-        </TextComponent>
+        <TextComponent style={styles.buttonText}>Suivant</TextComponent>
       </TouchableOpacity>
     </ScrollView>
   );

@@ -15,9 +15,9 @@ import BackIcon from "../shared/icons/back.svg";
 import SliderLabels from "./SliderLabels";
 import { COLOR_PRIMARY, COLOR_WHITE, COLOR_LIGHT_GREY } from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
-import { PAGE_CHOOSE_BUDGET } from "../shared/constants/Pages";
+import { PAGE_CHOOSE_CONTINENT } from "../shared/constants/Pages";
 
-const ChooseTemperaturePage = ({ navigation }) => {
+const ChooseBudgetPage = ({ navigation }) => {
   return (
     <View style={styles.globalWrapper}>
       <View style={styles.headerWrapper}>
@@ -30,23 +30,23 @@ const ChooseTemperaturePage = ({ navigation }) => {
           <BackIcon width={SPACING_MEDIUM} height={SPACING_MEDIUM} />
         </TouchableOpacity>
         <TextComponent style={styles.headline}>
-          Choisissez votre température idéale
+          Choisissez votre budget pour le week-end
         </TextComponent>
       </View>
 
       <MultiSlider
         enableLabel={true}
-        values={[0, 40]}
-        max={40}
+        values={[0, 600]}
+        max={600}
         customLabel={(e) => {
-          return <SliderLabels props={e} isEuros={false}/>;
+          return <SliderLabels props={e} isEuros={true}/>;
         }}
       />
 
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.navigate(PAGE_CHOOSE_BUDGET);
+          navigation.navigate(PAGE_CHOOSE_CONTINENT);
         }}
       >
         <TextComponent style={styles.buttonText}>Suivant</TextComponent>
@@ -99,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChooseTemperaturePage;
+export default ChooseBudgetPage;

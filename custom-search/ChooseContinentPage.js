@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions, Switch } from "react-native";
 import TextComponent from "../shared/components/TextComponent";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import {
   SPACING_LARGE,
   SPACING_NORMAL,
@@ -13,11 +12,33 @@ import {
 } from "../shared/constants/Dimens";
 import BackIcon from "../shared/icons/back.svg";
 import SliderLabels from "./SliderLabels";
-import { COLOR_PRIMARY, COLOR_WHITE, COLOR_LIGHT_GREY } from "../shared/constants/Colors";
+import {
+  COLOR_PRIMARY,
+  COLOR_WHITE,
+  COLOR_LIGHT_GREY,
+} from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
-import { PAGE_CHOOSE_BUDGET } from "../shared/constants/Pages";
 
-const ChooseTemperaturePage = ({ navigation }) => {
+const ChooseContinentPage = ({ navigation }) => {
+  const [continents, setContinents] = useState([{}]);
+
+  useEffect(() => {
+    setContinents([
+      { id: 1, name: "Europe", selected: true },
+      { id: 2, name: "Amérique du Nord", selected: true },
+      { id: 3, name: "Amérique du Sud", selected: true },
+      { id: 4, name: "Asie", selected: true },
+    ]);
+  }, []);
+
+  let pressContient = (continent) => {
+    let index = continents.indexOf(continent);
+    continent.selected = continent.selected ? false : true;
+    let newContinents = JSON.parse(JSON.stringify(continents));
+    newContinents[index] = continent;
+    setContinents(newContinents);
+  };
+
   return (
     <View style={styles.globalWrapper}>
       <View style={styles.headerWrapper}>
@@ -30,26 +51,30 @@ const ChooseTemperaturePage = ({ navigation }) => {
           <BackIcon width={SPACING_MEDIUM} height={SPACING_MEDIUM} />
         </TouchableOpacity>
         <TextComponent style={styles.headline}>
-          Choisissez votre température idéale
+          Choisissez les continents qui vous intéressent
         </TextComponent>
       </View>
 
-      <MultiSlider
-        enableLabel={true}
-        values={[0, 40]}
-        max={40}
-        customLabel={(e) => {
-          return <SliderLabels props={e} isEuros={false}/>;
-        }}
-      />
+      <View style={styles.continentsWrapper}>
+        {continents.map((item) => {
+          return (
+            <View style={styles.continentWrapper} key={item.id}>
+              <TextComponent style={styles.continentName}>
+                {item.name}
+              </TextComponent>
+              <Switch value={item.selected} onValueChange={() => pressContient(item)}/>
+            </View>
+          );
+        })}
+      </View>
 
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.navigate(PAGE_CHOOSE_BUDGET);
+          navigation.navigate(PAGE_CHOOSE_TEMPERATURE);
         }}
       >
-        <TextComponent style={styles.buttonText}>Suivant</TextComponent>
+        <TextComponent style={styles.buttonText}>Voir les résultats</TextComponent>
       </TouchableOpacity>
     </View>
   );
@@ -83,6 +108,18 @@ const styles = StyleSheet.create({
     marginRight: SPACING_LARGER,
     paddingRight: SPACING_LARGE,
   },
+  continentsWrapper: {
+    display: "flex",
+    width: "100%",
+    paddingHorizontal: SPACING_NORMAL,
+  },
+  continentWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: SPACING_NORMAL,
+  },
+  continentName: {},
   button: {
     backgroundColor: COLOR_PRIMARY,
     marginBottom: SPACING_NORMAL,
@@ -99,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChooseTemperaturePage;
+export default ChooseContinentPage;

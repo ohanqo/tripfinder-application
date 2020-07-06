@@ -7,7 +7,6 @@ import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import DestinationDetailPage from "./destination-detail/DestinationDetailPage";
 import DestinationListPage from "./destination-list/DestinationListPage";
-import HomePage from "./home/HomePage";
 import OnboardingPage from "./onboarding/OnboardingPage";
 import {
   FONT_BOLD,
@@ -22,10 +21,14 @@ import {
   PAGE_NAVBAR,
   PAGE_CHOOSE_TYPES,
   PAGE_CHOOSE_TEMPERATURE,
+  PAGE_CHOOSE_BUDGET,
+  PAGE_CHOOSE_CONTINENT,
 } from "./shared/constants/Pages";
 import NavBar from "./navbar/NavBar";
 import ChooseTypesPage from "./custom-search/ChooseTypesPage";
 import ChooseTemperaturePage from "./custom-search/ChooseTemperaturePage";
+import ChooseBudgetPage from "./custom-search/ChooseBudgetPage";
+import ChooseContinentPage from "./custom-search/ChooseContinentPage";
 
 const Stack = createStackNavigator();
 
@@ -68,7 +71,16 @@ export const App = () => {
             name={PAGE_CHOOSE_TEMPERATURE}
             component={ChooseTemperaturePage}
           />
-          <Stack.Screen name={PAGE_CHOOSE_TYPES} component={ChooseTypesPage}/>
+          <Stack.Screen
+            name={PAGE_CHOOSE_BUDGET}
+            component={ChooseBudgetPage}
+          />
+          <Stack.Screen
+            name={PAGE_CHOOSE_CONTINENT}
+            component={ChooseContinentPage}
+          />
+
+          <Stack.Screen name={PAGE_CHOOSE_TYPES} component={ChooseTypesPage} />
         </Stack.Navigator>
       </NavigationContainer>
     );
