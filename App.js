@@ -7,7 +7,7 @@ import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import DestinationDetailPage from "./destination-detail/DestinationDetailPage";
 import DestinationListPage from "./destination-list/DestinationListPage";
-import HomePage from "./home/HomePage";
+import NavBar from "./navbar/NavBar";
 import OnboardingPage from "./onboarding/OnboardingPage";
 import {
   FONT_BOLD,
@@ -18,10 +18,10 @@ import {
 import {
   PAGE_DESTINATION_DETAIL,
   PAGE_DESTINATION_LIST,
-  PAGE_ONBOARDING,
   PAGE_NAVBAR,
+  PAGE_ONBOARDING,
 } from "./shared/constants/Pages";
-import NavBar from "./navbar/NavBar";
+import { StoreProvider } from "./shared/context/Context";
 
 const Stack = createStackNavigator();
 
@@ -45,23 +45,25 @@ export const App = () => {
     return <AppLoading />;
   } else {
     return (
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{ headerShown: false }}
-          initialRouteName={PAGE_ONBOARDING}
-        >
-          <Stack.Screen name={PAGE_ONBOARDING} component={OnboardingPage} />
-          <Stack.Screen name={PAGE_NAVBAR} component={NavBar} />
-          <Stack.Screen
-            name={PAGE_DESTINATION_LIST}
-            component={DestinationListPage}
-          />
-          <Stack.Screen
-            name={PAGE_DESTINATION_DETAIL}
-            component={DestinationDetailPage}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <StoreProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{ headerShown: false }}
+            initialRouteName={PAGE_ONBOARDING}
+          >
+            <Stack.Screen name={PAGE_ONBOARDING} component={OnboardingPage} />
+            <Stack.Screen name={PAGE_NAVBAR} component={NavBar} />
+            <Stack.Screen
+              name={PAGE_DESTINATION_LIST}
+              component={DestinationListPage}
+            />
+            <Stack.Screen
+              name={PAGE_DESTINATION_DETAIL}
+              component={DestinationDetailPage}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </StoreProvider>
     );
   }
 };
