@@ -161,7 +161,7 @@ export default class DestinationDetailPage extends React.Component {
               styles.detailMiddleLayer,
               {
                 height: this.state.middleLayerHeight.interpolate({
-                  inputRange: [0, 100],
+                  inputRange: [-10, 100],
                   outputRange: ["0%", "100%"],
                 }),
               },
@@ -214,7 +214,7 @@ export default class DestinationDetailPage extends React.Component {
               styles.detailFrontLayer,
               {
                 height: this.state.frontLayerHeight.interpolate({
-                  inputRange: [0, 100],
+                  inputRange: [-5, 100],
                   outputRange: ["0%", "100%"],
                 }),
               },
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginTop: "auto",
     marginStart: SPACING_LARGE,
-    marginBottom: Dimensions.get("window").height * 0.15,
+    marginBottom: Dimensions.get("window").height * 0.25,
   },
   detailDestinationName: {
     fontSize: FONT_HEADLINE,
