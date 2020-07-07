@@ -24,7 +24,6 @@ import {
   FONT_LARGER,
   FONT_NORMAL,
   SPACING_LARGE,
-  SPACING_MEDIUM,
   SPACING_SMALL,
   SPACING_SMALLER,
 } from "../shared/constants/Dimens";
@@ -308,14 +307,14 @@ const styles = StyleSheet.create({
     fontSize: FONT_NORMAL,
     lineHeight: 24,
     fontFamily: FONT_MEDIUM,
-    marginTop: SPACING_MEDIUM,
+    marginTop: 40,
     color: COLOR_WHITE,
   },
   detailDestinationDescription: {
     fontSize: FONT_NORMAL,
     lineHeight: 24,
     fontFamily: FONT_MEDIUM,
-    marginTop: SPACING_MEDIUM,
+    marginTop: 40,
   },
   destinationTypesList: {
     flex: 1,
