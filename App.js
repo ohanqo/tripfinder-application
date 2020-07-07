@@ -32,7 +32,7 @@ import ChooseTypesPage from "./custom-search/types/ChooseTypesPage";
 import ChooseTemperaturePage from "./custom-search/ChooseTemperaturePage";
 import ChooseBudgetPage from "./custom-search/ChooseBudgetPage";
 import ChooseContinentPage from "./custom-search/ChooseContinentPage";
-import SearchResultPage from "./custom-search/SearchResultPage";
+import SearchResultPage from "./search-results/SearchResultPage";
 
 const Stack = createStackNavigator();
 

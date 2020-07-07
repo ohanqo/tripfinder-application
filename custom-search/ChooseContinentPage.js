@@ -27,7 +27,7 @@ const ChooseContinentPage = ({ route, navigation }) => {
     ]);
   }, []);
 
-  const goToNextPage = () => {
+  const goToResults = () => {
     let continentsSelected = [];
 
     for (const continent of continents) {
@@ -69,7 +69,7 @@ const ChooseContinentPage = ({ route, navigation }) => {
         })}
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={goToNextPage}>
+      <TouchableOpacity style={styles.button} onPress={goToResults}>
         <TextComponent style={styles.buttonText}>
           Voir les résultats
         </TextComponent>

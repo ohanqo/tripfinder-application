@@ -36,17 +36,6 @@ const SearchResultPage = ({ route, navigation }) => {
           Résultats de votre recherche
         </TextComponent>
       </View>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          goToNextPage();
-        }}
-      >
-        <TextComponent style={styles.buttonText}>
-          Voir les résultats
-        </TextComponent>
-      </TouchableOpacity>
     </View>
   );
 };
