@@ -43,8 +43,9 @@ const ChooseBudgetPage = ({ route, navigation }) => {
 
       <MultiSlider
         enableLabel={true}
-        values={[0, 600]}
+        values={[10, 600]}
         max={600}
+        min={10}
         customLabel={(e) => {
           return <SliderLabelsComponent props={e} isEuros={true} />;
         }}

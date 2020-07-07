@@ -13,12 +13,20 @@ import {
 } from "../shared/constants/Dimens";
 import { FONT_BOLD } from "../shared/constants/Fonts";
 import BackIcon from "../shared/icons/back-icon.svg";
+import CityService from "../shared/services/CityService";
 
 const SearchResultPage = ({ route, navigation }) => {
   let { filters } = route.params;
 
   useEffect(() => {
-    console.log(filters);
+    //console.log(filters);
+
+    async function fetchData() {
+      let response = await CityService.searchCities()
+      console.log( response);
+    }
+    fetchData();
+    
   }, []);
 
   return (

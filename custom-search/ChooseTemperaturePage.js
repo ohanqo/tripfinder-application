@@ -43,8 +43,9 @@ const ChooseTemperaturePage = ({ route, navigation }) => {
 
       <MultiSlider
         enableLabel={true}
-        values={[0, 40]}
+        values={[1, 40]}
         max={40}
+        min={1}
         customLabel={(e) => {
           return <SliderLabelsComponent props={e} isEuros={false} />;
         }}
