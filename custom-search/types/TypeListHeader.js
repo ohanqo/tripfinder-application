@@ -1,20 +1,20 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+import HeaderComponent from "../../shared/components/HeaderComponent";
+import TextComponent from "../../shared/components/TextComponent";
+import { COLOR_LIGHT_GREY } from "../../shared/constants/Colors";
 import {
   FONT_LARGER,
-  SPACING_LARGE,
   FONT_NORMAL,
+  SPACING_LARGE,
   SPACING_LARGER,
 } from "../../shared/constants/Dimens";
 import { FONT_BOLD } from "../../shared/constants/Fonts";
-import { COLOR_LIGHT_GREY } from "../../shared/constants/Colors";
-import TextComponent from "../../shared/components/TextComponent";
-import HeaderComponent from "../../shared/components/HeaderComponent";
 
 const TypeListHeader = ({ navigation }) => {
   return (
     <>
-      <HeaderComponent navigation={navigation}>
+      <HeaderComponent navigation={navigation} style={styles.header}>
         <TextComponent style={styles.headline}>
           Qu'aimez vous faire lorsque vous voyagez ?
         </TextComponent>
@@ -28,6 +28,9 @@ const TypeListHeader = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  header: {
+    width: Dimensions.get("window").width - 40,
+  },
   headline: {
     fontSize: FONT_LARGER,
     textAlign: "center",

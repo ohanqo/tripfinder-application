@@ -1,22 +1,18 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
-import TextComponent from "../shared/components/TextComponent";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import TextComponent from "../shared/components/TextComponent";
+import { COLOR_PRIMARY, COLOR_WHITE } from "../shared/constants/Colors";
 import {
-  SPACING_LARGE,
-  SPACING_NORMAL,
   FONT_LARGER,
-  SPACING_MEDIUM,
+  SPACING_LARGE,
   SPACING_LARGER,
+  SPACING_MEDIUM,
+  SPACING_NORMAL,
   SPACING_SMALLER,
 } from "../shared/constants/Dimens";
-import BackIcon from "../shared/icons/back.svg";
-import SliderLabels from "./SliderLabelsComponent";
-import {
-  COLOR_PRIMARY,
-  COLOR_WHITE,
-} from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
+import BackIcon from "../shared/icons/back-icon.svg";
 
 const SearchResultPage = ({ route, navigation }) => {
   let { filters } = route.params;

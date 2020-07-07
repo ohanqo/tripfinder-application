@@ -1,24 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Dimensions, Switch } from "react-native";
-import TextComponent from "../shared/components/TextComponent";
+import React, { useEffect, useState } from "react";
+import { Dimensions, StyleSheet, Switch, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import HeaderComponent from "../shared/components/HeaderComponent";
+import TextComponent from "../shared/components/TextComponent";
+import { COLOR_PRIMARY, COLOR_WHITE } from "../shared/constants/Colors";
 import {
-  SPACING_LARGE,
-  SPACING_NORMAL,
   FONT_LARGER,
-  SPACING_MEDIUM,
+  SPACING_LARGE,
   SPACING_LARGER,
+  SPACING_NORMAL,
   SPACING_SMALLER,
 } from "../shared/constants/Dimens";
-import BackIcon from "../shared/icons/back.svg";
-import SliderLabels from "./SliderLabelsComponent";
-import {
-  COLOR_PRIMARY,
-  COLOR_WHITE,
-} from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
 import { PAGE_SEARCH_RESULTS } from "../shared/constants/Pages";
-import HeaderComponent from "../shared/components/HeaderComponent";
 
 const ChooseContinentPage = ({ route, navigation }) => {
   const [continents, setContinents] = useState([{}]);
@@ -41,8 +35,8 @@ const ChooseContinentPage = ({ route, navigation }) => {
         continentsSelected.push(continent.name);
       }
     }
+
     filters.continent = continentsSelected;
-    console.log(JSON.stringify(filters));
     navigation.navigate(PAGE_SEARCH_RESULTS, { filters: filters });
   };
 
@@ -56,20 +50,16 @@ const ChooseContinentPage = ({ route, navigation }) => {
 
   return (
     <View style={styles.globalWrapper}>
-
       <HeaderComponent navigation={navigation}>
         <TextComponent style={styles.headline}>
           Choisissez les continents qui vous intéressent
         </TextComponent>
-
       </HeaderComponent>
       <View style={styles.continentsWrapper}>
         {continents.map((item, index) => {
           return (
             <View style={styles.continentWrapper} key={index}>
-              <TextComponent style={styles.continentName}>
-                {item.name}
-              </TextComponent>
+              <TextComponent>{item.name}</TextComponent>
               <Switch
                 value={item.selected}
                 onValueChange={() => pressContient(item)}
@@ -79,12 +69,7 @@ const ChooseContinentPage = ({ route, navigation }) => {
         })}
       </View>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          goToNextPage();
-        }}
-      >
+      <TouchableOpacity style={styles.button} onPress={goToNextPage}>
         <TextComponent style={styles.buttonText}>
           Voir les résultats
         </TextComponent>
@@ -101,8 +86,9 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    alignSelf: "center",
+    width: Dimensions.get("window").width - 40,
   },
-
   headline: {
     fontSize: FONT_LARGER,
     textAlign: "center",
@@ -119,7 +105,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: SPACING_NORMAL,
   },
-  continentName: {},
   button: {
     backgroundColor: COLOR_PRIMARY,
     marginBottom: SPACING_NORMAL,

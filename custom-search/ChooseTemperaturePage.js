@@ -1,34 +1,34 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
-import TextComponent from "../shared/components/TextComponent";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
+import React, { useState } from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import HeaderComponent from "../shared/components/HeaderComponent";
+import TextComponent from "../shared/components/TextComponent";
+import { COLOR_PRIMARY, COLOR_WHITE } from "../shared/constants/Colors";
 import {
-  SPACING_LARGE,
-  SPACING_NORMAL,
   FONT_LARGER,
+  SPACING_LARGE,
   SPACING_LARGER,
+  SPACING_NORMAL,
   SPACING_SMALLER,
 } from "../shared/constants/Dimens";
-import SliderLabelsComponent from "./SliderLabelsComponent";
-import { COLOR_PRIMARY, COLOR_WHITE } from "../shared/constants/Colors";
 import { FONT_BOLD } from "../shared/constants/Fonts";
 import { PAGE_CHOOSE_BUDGET } from "../shared/constants/Pages";
-import HeaderComponent from "../shared/components/HeaderComponent";
+import SliderLabelsComponent from "./SliderLabelsComponent";
 
 const ChooseTemperaturePage = ({ route, navigation }) => {
-  const [minTmp, setMinTmp] = useState(0);
-  const [maxTmp, setMaxTmp] = useState(40);
+  const [minTemperature, setMinTemperature] = useState(0);
+  const [maxTemperature, setMaxTemperature] = useState(40);
   let { filters } = route.params;
 
-  const changeTmp = (e) => {
-    setMinTmp(e[0]);
-    setMaxTmp(e[1]);
+  const changeTemperature = (e) => {
+    setMinTemperature(e[0]);
+    setMaxTemperature(e[1]);
   };
 
   const goToNextPage = () => {
-    filters.minTmp = minTmp;
-    filters.maxTmp = maxTmp;
+    filters.minTemperature = minTemperature;
+    filters.maxTemperature = maxTemperature;
 
     navigation.navigate(PAGE_CHOOSE_BUDGET, { filters: filters });
   };
@@ -48,17 +48,10 @@ const ChooseTemperaturePage = ({ route, navigation }) => {
         customLabel={(e) => {
           return <SliderLabelsComponent props={e} isEuros={false} />;
         }}
-        onValuesChangeFinish={(e) => {
-          changeTmp(e);
-        }}
+        onValuesChangeFinish={changeTemperature}
       />
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          goToNextPage();
-        }}
-      >
+      <TouchableOpacity style={styles.button} onPress={goToNextPage}>
         <TextComponent style={styles.buttonText}>Suivant</TextComponent>
       </TouchableOpacity>
     </View>
@@ -73,7 +66,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "space-between",
-
+    alignSelf: "center",
+    width: Dimensions.get("window").width - 40,
   },
   headline: {
     fontSize: FONT_LARGER,

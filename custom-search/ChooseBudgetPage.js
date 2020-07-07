@@ -1,21 +1,20 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
-import TextComponent from "../shared/components/TextComponent";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
-import {
-  SPACING_LARGE,
-  SPACING_NORMAL,
-  FONT_LARGER,
-  SPACING_LARGER,
-  SPACING_SMALLER,
-  SPACING_SMALL,
-} from "../shared/constants/Dimens";
-import SliderLabelsComponent from "./SliderLabelsComponent";
+import React, { useState } from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import HeaderComponent from "../shared/components/HeaderComponent";
+import TextComponent from "../shared/components/TextComponent";
 import { COLOR_PRIMARY, COLOR_WHITE } from "../shared/constants/Colors";
+import {
+  FONT_LARGER,
+  SPACING_LARGE,
+  SPACING_LARGER,
+  SPACING_NORMAL,
+  SPACING_SMALLER,
+} from "../shared/constants/Dimens";
 import { FONT_BOLD } from "../shared/constants/Fonts";
 import { PAGE_CHOOSE_CONTINENT } from "../shared/constants/Pages";
-import HeaderComponent from "../shared/components/HeaderComponent";
+import SliderLabelsComponent from "./SliderLabelsComponent";
 
 const ChooseBudgetPage = ({ route, navigation }) => {
   const [minBudget, setMinBudget] = useState(0);
@@ -49,17 +48,10 @@ const ChooseBudgetPage = ({ route, navigation }) => {
         customLabel={(e) => {
           return <SliderLabelsComponent props={e} isEuros={true} />;
         }}
-        onValuesChangeFinish={(e) => {
-          changeBudget(e);
-        }}
+        onValuesChangeFinish={changeBudget}
       />
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          goToNextPage();
-        }}
-      >
+      <TouchableOpacity style={styles.button} onPress={goToNextPage}>
         <TextComponent style={styles.buttonText}>Suivant</TextComponent>
       </TouchableOpacity>
     </View>
@@ -74,19 +66,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    paddingHorizontal: SPACING_SMALL,
-  },
-  backButton: {
-    alignSelf: "flex-start",
-    paddingRight: SPACING_NORMAL,
-  },
-  headerWrapper: {
-    display: "flex",
-    width: "100%",
-    flexDirection: "row",
-    paddingHorizontal: SPACING_NORMAL,
-    justifyContent: "space-between",
-    alignItems: "center",
+    alignSelf: "center",
+    width: Dimensions.get("window").width - 40,
   },
   headline: {
     fontSize: FONT_LARGER,

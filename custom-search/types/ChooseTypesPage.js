@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet, FlatList } from "react-native";
-import { SPACING_LARGE, SPACING_SMALL } from "../../shared/constants/Dimens";
+import React, { useEffect, useState } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
 import beach from "../../shared/assets/images/beach.jpg";
 import culture from "../../shared/assets/images/culture.jpg";
 import mountain from "../../shared/assets/images/mountain.jpg";
 import nightLiving from "../../shared/assets/images/night-living.jpg";
 import sport from "../../shared/assets/images/sport.jpg";
+import { SPACING_LARGE, SPACING_SMALL } from "../../shared/constants/Dimens";
 import { PAGE_CHOOSE_TEMPERATURE } from "../../shared/constants/Pages";
-import TypeListHeader from "./TypeListHeader";
-import TypeListFooter from "./TypeListFooter";
 import TypeItemComponent from "./TypeItemComponent";
+import TypeListFooter from "./TypeListFooter";
+import TypeListHeader from "./TypeListHeader";
 
 const ChooseTypesPage = ({ navigation }) => {
   const [types, setTypes] = useState([]);
@@ -34,12 +34,8 @@ const ChooseTypesPage = ({ navigation }) => {
   };
 
   let goToNextPage = () => {
-    let chosenTypes = [];
-    for (const type of types) {
-      if (type.selected) {
-        chosenTypes.push(type.name);
-      }
-    }
+    const chosenTypes = types.filter((type) => type.selected);
+
     navigation.navigate(PAGE_CHOOSE_TEMPERATURE, {
       filters: { types: chosenTypes },
     });
@@ -59,11 +55,9 @@ const ChooseTypesPage = ({ navigation }) => {
         numColumns="2"
         scrollEnabled={true}
         renderItem={({ item }) => (
-          <TypeItemComponent item={item} onPress={(item) => pressType(item)} />
+          <TypeItemComponent item={item} onPress={pressType} />
         )}
-        ListFooterComponent={
-          <TypeListFooter onButtonClick={() => goToNextPage()} />
-        }
+        ListFooterComponent={<TypeListFooter onButtonClick={goToNextPage} />}
       />
     </View>
   );

@@ -1,19 +1,13 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
 import { SPACING_MEDIUM, SPACING_NORMAL } from "../constants/Dimens";
-import BackIcon from "../icons/back.svg";
+import BackIcon from "../icons/back-icon.svg";
 
-const HeaderComponent = ({ navigation, children }) => {
+const HeaderComponent = ({ navigation, children, style }) => {
   return (
-    <View style={styles.headerWrapper}>
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => {
-          navigation.goBack();
-        }}
-      >
+    <View style={[styles.headerWrapper, { ...style }]}>
+      <TouchableOpacity style={styles.backButton} onPress={navigation.goBack}>
         <BackIcon width={SPACING_MEDIUM} height={SPACING_MEDIUM} />
       </TouchableOpacity>
 

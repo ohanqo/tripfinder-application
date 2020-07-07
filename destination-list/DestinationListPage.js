@@ -16,7 +16,7 @@ const DestinationListPage = ({ navigation }) => {
   const { state } = useContext(StoreContext);
 
   useEffect(() => {
-    const cities = state.cities;
+    const cities = JSON.parse(JSON.stringify(state.cities));
     const middleIndex = Math.round(cities.length / 2);
     const leftList = cities.splice(0, middleIndex);
 
@@ -31,10 +31,7 @@ const DestinationListPage = ({ navigation }) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <GoBackComponent
-          style={styles.backIcon}
-          onPress={() => navigation.goBack()}
-        />
+        <GoBackComponent style={styles.backIcon} onPress={navigation.goBack} />
 
         <TextComponent style={styles.headline}>
           <TextComponent style={styles.headlineColorized}>
