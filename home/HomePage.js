@@ -27,6 +27,7 @@ import ArrowRight from "../shared/icons/arrow-right.svg";
 import SearchIcon from "../shared/icons/search-icon.svg";
 import CityService from "../shared/services/CityService";
 import { SERVER_URL } from "../shared/services/service";
+import { PAGE_CHOOSE_TYPES } from "../shared/constants/Pages";
 
 const HomePage = ({ navigation }) => {
   const [cities, setCities] = useState([]);
@@ -86,7 +87,7 @@ const HomePage = ({ navigation }) => {
         )}
       />
 
-      <TouchableOpacity style={styles.searchButton}>
+      <TouchableOpacity style={styles.searchButton} onPress={() => {navigation.navigate(PAGE_CHOOSE_TYPES)}}>
         <TextComponent style={styles.searchButtonText}>
           Recherche personnalisée
         </TextComponent>

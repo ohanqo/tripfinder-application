@@ -7,7 +7,7 @@ import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import DestinationDetailPage from "./destination-detail/DestinationDetailPage";
 import DestinationListPage from "./destination-list/DestinationListPage";
-import NavBar from "./navbar/NavBar";
+import HomePage from "./home/HomePage";
 import OnboardingPage from "./onboarding/OnboardingPage";
 import {
   FONT_BOLD,
@@ -20,8 +20,19 @@ import {
   PAGE_DESTINATION_LIST,
   PAGE_NAVBAR,
   PAGE_ONBOARDING,
+  PAGE_CHOOSE_TYPES,
+  PAGE_CHOOSE_TEMPERATURE,
+  PAGE_CHOOSE_BUDGET,
+  PAGE_CHOOSE_CONTINENT,
+  PAGE_SEARCH_RESULTS,
 } from "./shared/constants/Pages";
 import { StoreProvider } from "./shared/context/Context";
+import NavBar from "./navbar/NavBar";
+import ChooseTypesPage from "./custom-search/types/ChooseTypesPage";
+import ChooseTemperaturePage from "./custom-search/ChooseTemperaturePage";
+import ChooseBudgetPage from "./custom-search/ChooseBudgetPage";
+import ChooseContinentPage from "./custom-search/ChooseContinentPage";
+import SearchResultPage from "./custom-search/SearchResultPage";
 
 const Stack = createStackNavigator();
 
@@ -60,6 +71,26 @@ export const App = () => {
             <Stack.Screen
               name={PAGE_DESTINATION_DETAIL}
               component={DestinationDetailPage}
+            />
+            <Stack.Screen
+              name={PAGE_CHOOSE_TEMPERATURE}
+              component={ChooseTemperaturePage}
+            />
+            <Stack.Screen
+              name={PAGE_CHOOSE_BUDGET}
+              component={ChooseBudgetPage}
+            />
+            <Stack.Screen
+              name={PAGE_CHOOSE_CONTINENT}
+              component={ChooseContinentPage}
+            />
+            <Stack.Screen
+              name={PAGE_CHOOSE_TYPES}
+              component={ChooseTypesPage}
+            />
+            <Stack.Screen
+              name={PAGE_SEARCH_RESULTS}
+              component={SearchResultPage}
             />
           </Stack.Navigator>
         </NavigationContainer>
