@@ -10,10 +10,33 @@ class CityService {
     }
   }
 
-  static async searchCities() {
+  static async searchCities(filters) {
+    console.log(filters);
+    let apiUlrFilters = "/search";
+
+    if (filters !== undefined) {
+      const {
+        minTemperature,
+        maxTemperature,
+        minBudget,
+        maxBudget,
+        continent,
+        types,
+      } = filters;
+
+      apiUlrFilters += "?";
+
+      if (minTemperature !== 0 && maxTemperature !== 0) {
+        apiUlrFilters += `minTmp=${minTemperature}&maxTmp=${maxTemperature}&`;
+      }
+      if (minBudget !== 0 && maxBudget !== 0) {
+        apiUlrFilters += `minBudget=${minBudget}&maxBudget=${maxBudget}`;
+      }
+    }
+
     try {
-      console.log("/search?minTmp=1&maxTmp=10");
-      return await AUTH_HTTP.get("/search?minTmp=1&maxTmp=10");
+      console.log(apiUlrFilters);
+      return await AUTH_HTTP.get(apiUlrFilters);
     } catch (error) {
       console.log(error);
       return error;

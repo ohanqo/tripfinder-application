@@ -22,8 +22,8 @@ const SearchResultPage = ({ route, navigation }) => {
     //console.log(filters);
 
     async function fetchData() {
-      let response = await CityService.searchCities()
-      console.log( response);
+      let response = await CityService.searchCities(filters);
+      console.log(response);
     }
     fetchData();
     

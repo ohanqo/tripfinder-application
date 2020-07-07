@@ -17,7 +17,7 @@ import { PAGE_CHOOSE_BUDGET } from "../shared/constants/Pages";
 import SliderLabelsComponent from "./SliderLabelsComponent";
 
 const ChooseTemperaturePage = ({ route, navigation }) => {
-  const [minTemperature, setMinTemperature] = useState(0);
+  const [minTemperature, setMinTemperature] = useState(1);
   const [maxTemperature, setMaxTemperature] = useState(40);
   let { filters } = route.params;
 

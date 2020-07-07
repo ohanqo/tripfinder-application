@@ -17,7 +17,7 @@ import { PAGE_CHOOSE_CONTINENT } from "../shared/constants/Pages";
 import SliderLabelsComponent from "./SliderLabelsComponent";
 
 const ChooseBudgetPage = ({ route, navigation }) => {
-  const [minBudget, setMinBudget] = useState(0);
+  const [minBudget, setMinBudget] = useState(10);
   const [maxBudget, setMaxBudget] = useState(600);
   let { filters } = route.params;
 
