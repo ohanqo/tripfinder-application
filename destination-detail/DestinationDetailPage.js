@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
+import TextComponent from "../shared/components/TextComponent";
 import {
   COLOR_ACCENT,
   COLOR_BLACK,
@@ -18,6 +19,7 @@ import {
 import {
   FONT_HEADLINE,
   FONT_LARGE,
+  FONT_LARGER,
   SPACING_LARGE,
   SPACING_SMALLER,
 } from "../shared/constants/Dimens";
@@ -25,11 +27,18 @@ import { FONT_BOLD, FONT_LIGHT } from "../shared/constants/Fonts";
 import LineIcon from "../shared/icons/line-icon.svg";
 import { SERVER_URL } from "../shared/services/service";
 
+const layerHeight = {
+  FRONT_DEFAULT: 10,
+  FRONT_MAXIMIZE: 90,
+  MIDDLE_DEFAULT: 20,
+  MIDDLE_MAXIMIZE: 90,
+};
+
 export default class DestinationDetailPage extends React.Component {
   state = {
     pan: new Animated.ValueXY(),
-    frontLayerHeight: new Animated.Value(55),
-    middleLayerHeight: new Animated.Value(35),
+    frontLayerHeight: new Animated.Value(layerHeight.FRONT_DEFAULT),
+    middleLayerHeight: new Animated.Value(layerHeight.MIDDLE_DEFAULT),
   };
 
   delayedMiddleLayerFromDefaultToMaximized = debounce(
@@ -43,7 +52,7 @@ export default class DestinationDetailPage extends React.Component {
 
   animatedMiddleLayerFromDefaultToMaximized() {
     Animated.spring(this.state.middleLayerHeight, {
-      toValue: 90,
+      toValue: layerHeight.MIDDLE_MAXIMIZE,
       speed: 0.5,
       bounciness: -5,
     }).start();
@@ -60,7 +69,41 @@ export default class DestinationDetailPage extends React.Component {
 
   animatedMiddleLayerFromMaximizedToDefault() {
     Animated.spring(this.state.middleLayerHeight, {
-      toValue: 35,
+      toValue: layerHeight.MIDDLE_DEFAULT,
+      speed: 0.5,
+      bounciness: -5,
+    }).start();
+  }
+
+  delayedFrontLayerFromDefaultToMaximized = debounce(
+    this.animatedFrontLayerFromDefaultToMaximized,
+    300,
+    {
+      leading: true,
+      trailing: false,
+    },
+  );
+
+  animatedFrontLayerFromDefaultToMaximized() {
+    Animated.spring(this.state.frontLayerHeight, {
+      toValue: layerHeight.FRONT_MAXIMIZE,
+      speed: 0.5,
+      bounciness: -5,
+    }).start();
+  }
+
+  delayedFrontLayerFromMaximizedToDefault = debounce(
+    this.animatedFrontLayerFromMaximizedToDefault,
+    300,
+    {
+      leading: true,
+      trailing: false,
+    },
+  );
+
+  animatedFrontLayerFromMaximizedToDefault() {
+    Animated.spring(this.state.frontLayerHeight, {
+      toValue: layerHeight.FRONT_DEFAULT,
       speed: 0.5,
       bounciness: -5,
     }).start();
@@ -112,11 +155,38 @@ export default class DestinationDetailPage extends React.Component {
               },
             ]}
           >
-            <LineIcon
-              style={styles.detailMiddleLayerLine}
-              width="40"
-              height="40"
-            />
+            <LineIcon style={styles.detailLine} width="40" height="40" />
+
+            <TextComponent style={styles.detailMiddleLayerTitle}>
+              Informations
+            </TextComponent>
+          </Animated.View>
+        </PanGestureHandler>
+
+        <PanGestureHandler
+          onGestureEvent={(event) => {
+            const isSwipingToTop = event.nativeEvent.velocityY < 0;
+
+            isSwipingToTop
+              ? this.delayedFrontLayerFromDefaultToMaximized()
+              : this.delayedFrontLayerFromMaximizedToDefault();
+          }}
+        >
+          <Animated.View
+            style={[
+              styles.detailFrontLayer,
+              {
+                height: this.state.frontLayerHeight.interpolate({
+                  inputRange: [0, 100],
+                  outputRange: ["0%", "100%"],
+                }),
+              },
+            ]}
+          >
+            <LineIcon style={styles.detailLine} width="40" height="40" />
+            <TextComponent style={styles.detailFrontLayerTitle}>
+              Description
+            </TextComponent>
           </Animated.View>
         </PanGestureHandler>
       </View>
@@ -130,7 +200,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_BLACK,
   },
   detailBackground: {
-    height: Dimensions.get("window").height * 0.75,
+    height: Dimensions.get("window").height * 0.9,
     width: "100%",
     resizeMode: "cover",
   },
@@ -162,9 +232,30 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_ACCENT,
     borderTopStartRadius: 50,
     borderTopEndRadius: 50,
-    padding: SPACING_SMALLER,
+    paddingVertical: SPACING_SMALLER,
+    paddingHorizontal: SPACING_LARGE,
   },
-  detailMiddleLayerLine: {
+  detailLine: {
     alignSelf: "center",
+  },
+  detailFrontLayer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: COLOR_WHITE,
+    borderTopStartRadius: 50,
+    borderTopEndRadius: 50,
+    paddingVertical: SPACING_SMALLER,
+    paddingHorizontal: SPACING_LARGE,
+  },
+  detailFrontLayerTitle: {
+    fontSize: FONT_LARGER,
+    fontFamily: FONT_BOLD,
+  },
+  detailMiddleLayerTitle: {
+    fontSize: FONT_LARGER,
+    fontFamily: FONT_BOLD,
+    color: COLOR_WHITE,
   },
 });
