@@ -4,6 +4,7 @@ import React from "react";
 import {
   Animated,
   Dimensions,
+  FlatList,
   ImageBackground,
   StyleSheet,
   Text,
@@ -21,10 +22,13 @@ import {
   FONT_HEADLINE,
   FONT_LARGE,
   FONT_LARGER,
+  FONT_NORMAL,
   SPACING_LARGE,
+  SPACING_MEDIUM,
+  SPACING_SMALL,
   SPACING_SMALLER,
 } from "../shared/constants/Dimens";
-import { FONT_BOLD, FONT_LIGHT } from "../shared/constants/Fonts";
+import { FONT_BOLD, FONT_LIGHT, FONT_MEDIUM } from "../shared/constants/Fonts";
 import LineIcon from "../shared/icons/line-icon.svg";
 import { SERVER_URL } from "../shared/services/service";
 
@@ -137,7 +141,7 @@ export default class DestinationDetailPage extends React.Component {
                 {destination.name}
               </Text>
               <Text style={styles.detailDestinationCountry}>
-                {destination.country_name}
+                {destination.country_name}, {destination.continent_name}
               </Text>
             </View>
           </LinearGradient>
@@ -168,6 +172,31 @@ export default class DestinationDetailPage extends React.Component {
             <TextComponent style={styles.detailMiddleLayerTitle}>
               Informations
             </TextComponent>
+
+            <TextComponent style={styles.destinationInformation}>
+              {destination.name} dispose d'une température moyenne de{" "}
+              {destination.temperature}°C.
+            </TextComponent>
+
+            <TextComponent style={styles.destinationInformation}>
+              Le budget moyen pour un week-end est d'environ{" "}
+              {destination.budget} €.
+            </TextComponent>
+
+            <FlatList
+              data={destination.types}
+              horizontal={false}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item) => item.id.toString()}
+              columnWrapperStyle={styles.destinationTypesList}
+              numColumns="2"
+              scrollEnabled={true}
+              renderItem={({ item }) => (
+                <TextComponent style={styles.destinationInformation}>
+                  {item.name}
+                </TextComponent>
+              )}
+            />
           </Animated.View>
         </PanGestureHandler>
 
@@ -192,8 +221,13 @@ export default class DestinationDetailPage extends React.Component {
             ]}
           >
             <LineIcon style={styles.detailLine} width="40" height="40" />
+
             <TextComponent style={styles.detailFrontLayerTitle}>
               Description
+            </TextComponent>
+
+            <TextComponent style={styles.detailDestinationDescription}>
+              {destination.description}
             </TextComponent>
           </Animated.View>
         </PanGestureHandler>
@@ -269,5 +303,23 @@ const styles = StyleSheet.create({
     fontSize: FONT_LARGER,
     fontFamily: FONT_BOLD,
     color: COLOR_WHITE,
+  },
+  destinationInformation: {
+    fontSize: FONT_NORMAL,
+    lineHeight: 24,
+    fontFamily: FONT_MEDIUM,
+    marginTop: SPACING_MEDIUM,
+    color: COLOR_WHITE,
+  },
+  detailDestinationDescription: {
+    fontSize: FONT_NORMAL,
+    lineHeight: 24,
+    fontFamily: FONT_MEDIUM,
+    marginTop: SPACING_MEDIUM,
+  },
+  destinationTypesList: {
+    flex: 1,
+    justifyContent: "space-between",
+    marginBottom: SPACING_SMALL,
   },
 });
