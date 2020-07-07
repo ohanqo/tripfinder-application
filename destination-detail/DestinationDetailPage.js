@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
+import GoBackComponent from "../shared/components/GoBackComponent";
 import TextComponent from "../shared/components/TextComponent";
 import {
   COLOR_ACCENT,
@@ -29,9 +30,9 @@ import { SERVER_URL } from "../shared/services/service";
 
 const layerHeight = {
   FRONT_DEFAULT: 10,
-  FRONT_MAXIMIZE: 90,
+  FRONT_MAXIMIZE: 85,
   MIDDLE_DEFAULT: 20,
-  MIDDLE_MAXIMIZE: 90,
+  MIDDLE_MAXIMIZE: 85,
 };
 
 export default class DestinationDetailPage extends React.Component {
@@ -111,6 +112,7 @@ export default class DestinationDetailPage extends React.Component {
 
   render() {
     const { destination } = this.props.route.params;
+    const { navigation } = this.props;
 
     return (
       <View style={styles.detailWrapper}>
@@ -124,6 +126,12 @@ export default class DestinationDetailPage extends React.Component {
             colors={["transparent", "rgba(0, 0, 0, 0.4)"]}
             style={styles.detailBackgroundGradient}
           >
+            <GoBackComponent
+              style={styles.detailGoBack}
+              isWhite={true}
+              onPress={navigation.goBack}
+            />
+
             <View style={styles.detailDestinationWrapper}>
               <Text style={styles.detailDestinationName}>
                 {destination.name}
@@ -207,6 +215,10 @@ const styles = StyleSheet.create({
   detailBackgroundGradient: {
     width: "100%",
     height: "100%",
+  },
+  detailGoBack: {
+    marginStart: SPACING_LARGE,
+    marginTop: 60,
   },
   detailDestinationWrapper: {
     alignSelf: "flex-start",
