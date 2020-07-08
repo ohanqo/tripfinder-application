@@ -35,6 +35,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { SERVER_URL } from "../shared/services/service";
 import { LocationIcon } from "../shared/icons/location-icon.svg";
 import LocationComponent from "../shared/components/LocationComponent";
+import { PAGE_DESTINATION_DETAIL } from "../shared/constants/Pages";
 
 const SearchResultPage = ({ route, navigation }) => {
   let { filters } = route.params;
@@ -84,25 +85,36 @@ const SearchResultPage = ({ route, navigation }) => {
         contentContainerStyle={styles.flatList}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.cityWrapper}>
+          <TouchableOpacity
+            style={styles.cityWrapper}
+            onPress={() =>
+              navigation.navigate(PAGE_DESTINATION_DETAIL, {
+                destination: item,
+              })
+            }
+          >
             <Image
               style={styles.cityPicture}
               source={{ uri: `${SERVER_URL}${item.filename}` }}
             />
-          <View style={styles.cityInfoWrapper}>
-            <View style={styles.cityLineWrapper}>
-              <TextComponent style={styles.cityName}>{item.name}</TextComponent>
-              <LocationComponent
-                isWhite={false}
-                locationName={item.country_name}
-              />
-            </View>
-            <View style={styles.cityLineWrapper}>
-              <TextComponent style={styles.cityName}>
-                {item.temperature}°C
-              </TextComponent>
-              <TextComponent style={styles.continentName}>{item.continent_name}</TextComponent>
-            </View>
+            <View style={styles.cityInfoWrapper}>
+              <View style={styles.cityLineWrapper}>
+                <TextComponent style={styles.cityName}>
+                  {item.name}
+                </TextComponent>
+                <LocationComponent
+                  isWhite={false}
+                  locationName={item.country_name}
+                />
+              </View>
+              <View style={styles.cityLineWrapper}>
+                <TextComponent style={styles.cityName}>
+                  {item.temperature}°C
+                </TextComponent>
+                <TextComponent style={styles.continentName}>
+                  {item.continent_name}
+                </TextComponent>
+              </View>
             </View>
           </TouchableOpacity>
         )}
@@ -159,7 +171,7 @@ const styles = StyleSheet.create({
     borderRadius: SPACING_SMALL,
   },
   cityInfoWrapper: {
-    paddingVertical: SPACING_SMALL,  
+    paddingVertical: SPACING_SMALL,
   },
   cityLineWrapper: {
     display: "flex",
