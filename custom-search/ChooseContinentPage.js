@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, StyleSheet, Switch, View } from "react-native";
+import { Dimensions, StyleSheet, Switch, View, Picker } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import HeaderComponent from "../shared/components/HeaderComponent";
 import TextComponent from "../shared/components/TextComponent";
@@ -15,37 +15,26 @@ import { FONT_BOLD } from "../shared/constants/Fonts";
 import { PAGE_SEARCH_RESULTS } from "../shared/constants/Pages";
 
 const ChooseContinentPage = ({ route, navigation }) => {
-  const [continents, setContinents] = useState([{}]);
+  const [continents, setContinents] = useState([""]);
+  const [selectedContinent, setSelectedContinent] = useState(0);
   let { filters } = route.params;
 
   useEffect(() => {
     setContinents([
-      { id: 1, name: "Europe", selected: true },
-      { id: 2, name: "Amérique du Nord", selected: true },
-      { id: 3, name: "Amérique du Sud", selected: true },
-      { id: 4, name: "Asie", selected: true },
+      "Tous",
+      "Europe",
+      "Amérique du Nord",
+      "Amérique du Sud",
+      "Asie",
     ]);
   }, []);
 
   const goToResults = () => {
-    let continentsSelected = [];
-
-    for (const continent of continents) {
-      if (continent.selected) {
-        continentsSelected.push(continent.name);
-      }
+    if(selectedContinent !== 0){
+      filters.continent = continents[selectedContinent];
     }
-
-    filters.continent = continentsSelected;
+    
     navigation.navigate(PAGE_SEARCH_RESULTS, { filters: filters });
-  };
-
-  let pressContient = (continent) => {
-    let index = continents.indexOf(continent);
-    continent.selected = continent.selected ? false : true;
-    let newContinents = JSON.parse(JSON.stringify(continents));
-    newContinents[index] = continent;
-    setContinents(newContinents);
   };
 
   return (
@@ -56,17 +45,18 @@ const ChooseContinentPage = ({ route, navigation }) => {
         </TextComponent>
       </HeaderComponent>
       <View style={styles.continentsWrapper}>
-        {continents.map((item, index) => {
-          return (
-            <View style={styles.continentWrapper} key={index}>
-              <TextComponent>{item.name}</TextComponent>
-              <Switch
-                value={item.selected}
-                onValueChange={() => pressContient(item)}
-              />
-            </View>
-          );
-        })}
+        <Picker
+          selectedValue={selectedContinent}
+          onValueChange={(index) => {
+            setSelectedContinent(index);
+          }}
+        >
+          {continents.map((item) => {
+            return (
+              <Picker.Item label={item} value={continents.indexOf(item)} />
+            );
+          })}
+        </Picker>
       </View>
 
       <TouchableOpacity style={styles.button} onPress={goToResults}>

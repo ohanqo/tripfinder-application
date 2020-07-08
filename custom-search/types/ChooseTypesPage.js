@@ -9,7 +9,6 @@ import sport from "../../shared/assets/images/sport.jpg";
 import { SPACING_LARGE, SPACING_SMALL } from "../../shared/constants/Dimens";
 import { PAGE_CHOOSE_TEMPERATURE } from "../../shared/constants/Pages";
 import TypeItemComponent from "./TypeItemComponent";
-import TypeListFooter from "./TypeListFooter";
 import TypeListHeader from "./TypeListHeader";
 
 const ChooseTypesPage = ({ navigation }) => {
@@ -17,27 +16,23 @@ const ChooseTypesPage = ({ navigation }) => {
 
   useEffect(() => {
     setTypes([
-      { id: 1, name: "Montagne", selected: false, image: mountain },
-      { id: 2, name: "Plage", selected: false, image: beach },
-      { id: 3, name: "Vie Nocturne", selected: false, image: nightLiving },
-      { id: 4, name: "Culture", selected: false, image: culture },
-      { id: 5, name: "Sport", selected: false, image: sport },
+      { id: 1, name: "Montagne", image: mountain },
+      { id: 2, name: "Plage", image: beach },
+      { id: 3, name: "Vie Nocturne", image: nightLiving },
+      { id: 4, name: "Culture", image: culture },
+      { id: 5, name: "Sport", image: sport },
     ]);
   }, []);
 
   let pressType = (type) => {
-    let index = types.indexOf(type);
-    type.selected = type.selected ? false : true;
-    let newTypes = JSON.parse(JSON.stringify(types));
-    newTypes[index] = type;
-    setTypes(newTypes);
+    navigation.navigate(PAGE_CHOOSE_TEMPERATURE, {
+      filters: { type: type.name },
+    });
   };
 
   let goToNextPage = () => {
-    const chosenTypes = types.filter((type) => type.selected);
-
     navigation.navigate(PAGE_CHOOSE_TEMPERATURE, {
-      filters: { types: chosenTypes },
+      filters: {},
     });
   };
 
@@ -46,7 +41,12 @@ const ChooseTypesPage = ({ navigation }) => {
       <StatusBar style="dark" />
 
       <FlatList
-        ListHeaderComponent={<TypeListHeader navigation={navigation} />}
+        ListHeaderComponent={
+          <TypeListHeader
+            navigation={navigation}
+            onNextButtonClick={goToNextPage}
+          />
+        }
         data={types}
         horizontal={false}
         showsHorizontalScrollIndicator={false}
@@ -57,7 +57,6 @@ const ChooseTypesPage = ({ navigation }) => {
         renderItem={({ item }) => (
           <TypeItemComponent item={item} onPress={pressType} />
         )}
-        ListFooterComponent={<TypeListFooter onButtonClick={goToNextPage} />}
       />
     </View>
   );
