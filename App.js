@@ -7,10 +7,15 @@ import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import LoginPage from "./authentication/login/LoginPage";
 import RegisterPage from "./authentication/register/RegisterPage";
+import ChooseBudgetPage from "./custom-search/ChooseBudgetPage";
+import ChooseContinentPage from "./custom-search/ChooseContinentPage";
+import ChooseTemperaturePage from "./custom-search/ChooseTemperaturePage";
+import ChooseTypesPage from "./custom-search/types/ChooseTypesPage";
 import DestinationDetailPage from "./destination-detail/DestinationDetailPage";
 import DestinationListPage from "./destination-list/DestinationListPage";
 import NavBar from "./navbar/NavBar";
 import OnboardingPage from "./onboarding/OnboardingPage";
+import SearchResultPage from "./search-results/SearchResultPage";
 import {
   FONT_BOLD,
   FONT_LIGHT,
@@ -31,11 +36,6 @@ import {
   PAGE_SEARCH_RESULTS,
 } from "./shared/constants/Pages";
 import { StoreProvider } from "./shared/context/Context";
-import ChooseTypesPage from "./custom-search/types/ChooseTypesPage";
-import ChooseTemperaturePage from "./custom-search/ChooseTemperaturePage";
-import ChooseBudgetPage from "./custom-search/ChooseBudgetPage";
-import ChooseContinentPage from "./custom-search/ChooseContinentPage";
-import SearchResultPage from "./search-results/SearchResultPage";
 
 const Stack = createStackNavigator();
 
