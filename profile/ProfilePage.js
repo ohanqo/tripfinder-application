@@ -1,12 +1,6 @@
-import React, { useContext, useEffect } from "react";
-import {
-  View,
-  ImageBackground,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import React, { useContext } from "react";
+import { View, ImageBackground, StyleSheet, Dimensions } from "react-native";
 import TextComponent from "../shared/components/TextComponent";
-import { PAGE_LOGIN, PAGE_REGISTER } from "../shared/constants/Pages";
 import { StoreContext } from "../shared/context/Context";
 import {
   SPACING_NORMAL,
@@ -24,11 +18,6 @@ import DisconnectedComponent from "./DisconnectedComponent";
 const ProfilePage = ({ navigation }) => {
   const { state } = useContext(StoreContext);
 
-  useEffect(() => {
-    console.log(state.user);
-    console.log(state.user);
-  }, []);
-
   return (
     <View style={styles.globalWrapper}>
       <ImageBackground
@@ -43,7 +32,7 @@ const ProfilePage = ({ navigation }) => {
         </TextComponent>
       </ImageBackground>
       {state.user !== undefined ? (
-        <ConnectedComponent user={state.user} navigation={navigation}/>
+        <ConnectedComponent user={state.user} navigation={navigation} />
       ) : (
         <DisconnectedComponent navigation={navigation} />
       )}

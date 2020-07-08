@@ -1,16 +1,18 @@
 import React, { useContext } from "react";
-import { View, Button, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import TextComponent from "../shared/components/TextComponent";
-import { COLOR_WHITE, COLOR_RED, COLOR_PRIMARY } from "../shared/constants/Colors";
+import {
+  COLOR_WHITE,
+  COLOR_RED,
+  COLOR_PRIMARY,
+} from "../shared/constants/Colors";
 import TravelerIcon from "../shared/icons/traveler-icon.svg";
 import MailIcon from "../shared/icons/mail-icon.svg";
 import * as SecureStore from "expo-secure-store";
 import {
-  FONT_LARGE,
   FONT_LARGER,
   SPACING_NORMAL,
   SPACING_LARGE,
-  SPACING_LARGER,
   SPACING_SMALLER,
   SPACING_SMALL,
 } from "../shared/constants/Dimens";
@@ -44,7 +46,7 @@ const ConnectedComponent = ({ user, navigation }) => {
         <TouchableOpacity
           style={styles.createCityButton}
           onPress={() => {
-            navigation.navigate(PAGE_CREATE_CITY)
+            navigation.navigate(PAGE_CREATE_CITY);
           }}
         >
           <TextComponent style={styles.buttonText}>
@@ -59,9 +61,7 @@ const ConnectedComponent = ({ user, navigation }) => {
           disconnectUser();
         }}
       >
-        <TextComponent style={styles.buttonText}>
-          Déconnexion
-        </TextComponent>
+        <TextComponent style={styles.buttonText}>Déconnexion</TextComponent>
       </TouchableOpacity>
     </View>
   );

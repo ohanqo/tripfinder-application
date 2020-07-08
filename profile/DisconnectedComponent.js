@@ -1,24 +1,29 @@
 import React from "react";
 import TextComponent from "../shared/components/TextComponent";
-import { View, ImageBackground, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { PAGE_LOGIN, PAGE_REGISTER } from "../shared/constants/Pages";
-import { COLOR_WHITE, COLOR_PRIMARY, COLOR_LIGHT_GREY } from "../shared/constants/Colors";
+import {
+  COLOR_WHITE,
+  COLOR_PRIMARY,
+  COLOR_LIGHT_GREY,
+} from "../shared/constants/Colors";
 import {
   SPACING_LARGER,
   SPACING_NORMAL,
   SPACING_LARGE,
   SPACING_SMALLER,
-  SPACING_MEDIUM,
-  FONT_NORMAL,
   FONT_LARGE,
 } from "../shared/constants/Dimens";
-import { FONT_BOLD, FONT_MEDIUM } from "../shared/constants/Fonts";
+import { FONT_BOLD } from "../shared/constants/Fonts";
 
 const DisconnectedComponent = ({ navigation }) => {
   return (
     <View style={styles.globalWrapper}>
-      <TextComponent style={styles.subHeadLine}>En vous connectant vous débloquerez toutes les fonctionnalités de Trip Finder</TextComponent>
+      <TextComponent style={styles.subHeadLine}>
+        En vous connectant vous débloquerez toutes les fonctionnalités de Trip
+        Finder
+      </TextComponent>
 
       <TouchableOpacity
         style={styles.loginButton}
@@ -78,7 +83,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING_LARGE,
     borderRadius: SPACING_SMALLER,
     marginBottom: SPACING_LARGER,
-    
   },
   registerButtonText: {
     color: COLOR_WHITE,
