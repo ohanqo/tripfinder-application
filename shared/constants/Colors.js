@@ -5,4 +5,5 @@ export const COLOR_BLACK = "#141414";
 export const COLOR_GREY = '#404040';
 export const COLOR_LIGHT_GREY = '#ACACAC';
 export const COLOR_GHOST = "#c2c3d2";
+export const COLOR_ERROR = "#F56565";
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
   ImageBackground,
@@ -11,6 +11,7 @@ import RegisterBackgroundImage from "../../shared/assets/images/register-backgro
 import GoBackComponent from "../../shared/components/GoBackComponent";
 import TextComponent from "../../shared/components/TextComponent";
 import {
+  COLOR_ERROR,
   COLOR_GHOST,
   COLOR_PRIMARY,
   COLOR_WHITE,
@@ -23,9 +24,39 @@ import {
   SPACING_NORMAL,
   SPACING_SMALLER,
 } from "../../shared/constants/Dimens";
-import { FONT_BOLD } from "../../shared/constants/Fonts";
+import { FONT_BOLD, FONT_REGULAR } from "../../shared/constants/Fonts";
+import { PAGE_LOGIN } from "../../shared/constants/Pages";
+import extractError from "../../shared/utils/ExtractErrorMessage";
+import AuthenticationRepository from "../AuthenticationRepository";
 
 const RegisterPage = ({ navigation }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const register = async () => {
+    const dto = {
+      name,
+      email,
+      password,
+    };
+
+    try {
+      const response = await AuthenticationRepository.register(dto);
+      const potentialErrors = response?.response?.data?.errors ?? null;
+
+      if (potentialErrors) {
+        setErrorMessage(extractError(potentialErrors));
+      } else {
+        navigation.replace(PAGE_LOGIN);
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("Une erreur est survenue.");
+    }
+  };
+
   return (
     <View style={styles.registerWrapper}>
       <ImageBackground
@@ -48,23 +79,36 @@ const RegisterPage = ({ navigation }) => {
             placeholderTextColor={COLOR_GHOST}
             style={styles.registerInput}
             placeholder="Nom"
+            onChangeText={(s) => setName(s)}
           />
 
           <TextInput
+            keyboardType="email-address"
+            textContentType="emailAddress"
             placeholderTextColor={COLOR_GHOST}
             style={styles.registerInput}
             placeholder="Email"
+            onChangeText={(s) => setEmail(s)}
           />
 
           <TextInput
+            textContentType="password"
             placeholderTextColor={COLOR_GHOST}
+            secureTextEntry={true}
             style={styles.registerInput}
             placeholder="Mot de passe"
+            onChangeText={(s) => setPassword(s)}
           />
+
+          {errorMessage ? (
+            <TextComponent style={styles.registerErrorMessage}>
+              {errorMessage}
+            </TextComponent>
+          ) : null}
 
           <View style={styles.registerSpacing} />
 
-          <TouchableOpacity style={styles.registerButton}>
+          <TouchableOpacity style={styles.registerButton} onPress={register}>
             <TextComponent style={styles.registerButtonText}>
               S'inscrire
             </TextComponent>
@@ -75,7 +119,7 @@ const RegisterPage = ({ navigation }) => {
               Déjà un compte ?{" "}
             </TextComponent>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.replace(PAGE_LOGIN)}>
               <TextComponent style={styles.registerAlreadyAnAccountTextAccent}>
                 Connectez-vous
               </TextComponent>
@@ -127,6 +171,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: COLOR_GHOST,
     paddingBottom: SPACING_SMALLER,
+    fontFamily: FONT_REGULAR,
+  },
+  registerErrorMessage: {
+    fontSize: FONT_SMALL,
+    color: COLOR_ERROR,
   },
   registerSpacing: {
     flexGrow: 1,
