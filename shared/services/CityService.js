@@ -40,10 +40,8 @@ class CityService {
     }
 
     try {
-      console.log(apiUlrFilters);
       return await AUTH_HTTP.get(apiUlrFilters);
     } catch (error) {
-      console.log(error);
       return error;
     }
   }
