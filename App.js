@@ -5,9 +5,16 @@ import { AppLoading } from "expo";
 import * as ScreenOrientation from "expo-screen-orientation";
 import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
+import LoginPage from "./authentication/login/LoginPage";
+import RegisterPage from "./authentication/register/RegisterPage";
+import ChooseBudgetPage from "./custom-search/ChooseBudgetPage";
+import ChooseContinentPage from "./custom-search/ChooseContinentPage";
+import ChooseTemperaturePage from "./custom-search/ChooseTemperaturePage";
+import SearchResultPage from "./custom-search/SearchResultPage";
+import ChooseTypesPage from "./custom-search/types/ChooseTypesPage";
 import DestinationDetailPage from "./destination-detail/DestinationDetailPage";
 import DestinationListPage from "./destination-list/DestinationListPage";
-import HomePage from "./home/HomePage";
+import NavBar from "./navbar/NavBar";
 import OnboardingPage from "./onboarding/OnboardingPage";
 import {
   FONT_BOLD,
@@ -16,23 +23,19 @@ import {
   FONT_REGULAR,
 } from "./shared/constants/Fonts";
 import {
-  PAGE_DESTINATION_DETAIL,
-  PAGE_DESTINATION_LIST,
-  PAGE_NAVBAR,
-  PAGE_ONBOARDING,
-  PAGE_CHOOSE_TYPES,
-  PAGE_CHOOSE_TEMPERATURE,
   PAGE_CHOOSE_BUDGET,
   PAGE_CHOOSE_CONTINENT,
+  PAGE_CHOOSE_TEMPERATURE,
+  PAGE_CHOOSE_TYPES,
+  PAGE_DESTINATION_DETAIL,
+  PAGE_DESTINATION_LIST,
+  PAGE_LOGIN,
+  PAGE_NAVBAR,
+  PAGE_ONBOARDING,
+  PAGE_REGISTER,
   PAGE_SEARCH_RESULTS,
 } from "./shared/constants/Pages";
 import { StoreProvider } from "./shared/context/Context";
-import NavBar from "./navbar/NavBar";
-import ChooseTypesPage from "./custom-search/types/ChooseTypesPage";
-import ChooseTemperaturePage from "./custom-search/ChooseTemperaturePage";
-import ChooseBudgetPage from "./custom-search/ChooseBudgetPage";
-import ChooseContinentPage from "./custom-search/ChooseContinentPage";
-import SearchResultPage from "./custom-search/SearchResultPage";
 
 const Stack = createStackNavigator();
 
@@ -92,6 +95,8 @@ export const App = () => {
               name={PAGE_SEARCH_RESULTS}
               component={SearchResultPage}
             />
+            <Stack.Screen name={PAGE_REGISTER} component={RegisterPage} />
+            <Stack.Screen name={PAGE_LOGIN} component={LoginPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </StoreProvider>
