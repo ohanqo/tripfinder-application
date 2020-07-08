@@ -1,33 +1,80 @@
 import React, { useContext, useEffect } from "react";
-import { Button, View } from "react-native";
+import {
+  View,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import TextComponent from "../shared/components/TextComponent";
 import { PAGE_LOGIN, PAGE_REGISTER } from "../shared/constants/Pages";
 import { StoreContext } from "../shared/context/Context";
+import {
+  SPACING_NORMAL,
+  SPACING_LARGER,
+  FONT_LARGER,
+  FONT_HEADLINE,
+  SPACING_LARGE,
+} from "../shared/constants/Dimens";
+import { FONT_BOLD } from "../shared/constants/Fonts";
+import { COLOR_WHITE, COLOR_RED } from "../shared/constants/Colors";
+import headerImage from "../shared/assets/images/airplane.jpg";
+import ConnectedComponent from "./ConnectedComponent";
+import DisconnectedComponent from "./DisconnectedComponent";
 
 const ProfilePage = ({ navigation }) => {
   const { state } = useContext(StoreContext);
 
   useEffect(() => {
     console.log(state.user);
+    console.log(state.user);
   }, []);
 
   return (
-    <View>
-      <TextComponent>Profile</TextComponent>
-      <Button
-        onPress={() => navigation.navigate(PAGE_REGISTER)}
-        title="S'inscrire"
-      />
-      <Button
-        onPress={() => navigation.navigate(PAGE_LOGIN)}
-        title="Se connecter"
-      />
-
-      <TextComponent>
-        {state?.user?.is_admin === 1 ? "Est Admin" : "N'est pas admin"}
-      </TextComponent>
+    <View style={styles.globalWrapper}>
+      <ImageBackground
+        source={headerImage}
+        style={styles.backgroundHeaderImage}
+        imageStyle={styles.backgroundHeaderImage}
+      >
+        <TextComponent style={styles.headline}>
+          {state.user !== undefined
+            ? "Accédez à votre profil"
+            : "Connectez vous pour accéder à votre profil"}
+        </TextComponent>
+      </ImageBackground>
+      {state.user !== undefined ? (
+        <ConnectedComponent user={state.user} />
+      ) : (
+        <DisconnectedComponent navigation={navigation} />
+      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  globalWrapper: {
+    display: "flex",
+    flex: 1,
+  },
+  backgroundHeaderImage: {
+    width: Dimensions.get("window").width,
+    height: 250,
+    display: "flex",
+    flexDirection: "row",
+  },
+  backButton: {
+    paddingStart: SPACING_NORMAL,
+  },
+  headline: {
+    fontSize: FONT_LARGER,
+    fontFamily: FONT_BOLD,
+    color: COLOR_WHITE,
+    fontSize: FONT_HEADLINE,
+    paddingBottom: SPACING_LARGE,
+    paddingStart: SPACING_NORMAL,
+    marginTop: SPACING_LARGER,
+    alignSelf: "flex-end",
+  },
+});
 
 export default ProfilePage;
