@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Dimensions,
   StyleSheet,
@@ -8,18 +8,13 @@ import {
 } from "react-native";
 import { TouchableOpacity, FlatList } from "react-native-gesture-handler";
 import TextComponent from "../shared/components/TextComponent";
-import {
-  COLOR_PRIMARY,
-  COLOR_WHITE,
-  COLOR_BLACK,
-} from "../shared/constants/Colors";
+import { COLOR_PRIMARY, COLOR_WHITE } from "../shared/constants/Colors";
 import {
   FONT_LARGER,
   SPACING_LARGE,
   SPACING_LARGER,
   SPACING_MEDIUM,
   SPACING_NORMAL,
-  SPACING_SMALLER,
   FONT_HEADLINE,
   SPACING_SMALL,
   FONT_LARGE,
@@ -33,13 +28,14 @@ import GoBackComponent from "../shared/components/GoBackComponent";
 import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from "expo-linear-gradient";
 import { SERVER_URL } from "../shared/services/service";
-import { LocationIcon } from "../shared/icons/location-icon.svg";
 import LocationComponent from "../shared/components/LocationComponent";
+import { StoreContext } from "../shared/context/Context";
 import { PAGE_DESTINATION_DETAIL } from "../shared/constants/Pages";
 
 const SearchResultPage = ({ route, navigation }) => {
-  let { filters } = route.params;
+  let { filters, typedSearch } = route.params;
   const [citiesResult, setCitiesResult] = useState([]);
+  const { state } = useContext(StoreContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -47,7 +43,23 @@ const SearchResultPage = ({ route, navigation }) => {
       setCitiesResult(response);
     }
 
-    fetchData();
+    if (filters !== undefined) {
+      fetchData();
+    } else {
+      console.log(typedSearch);
+      const cities = JSON.parse(JSON.stringify(state.cities));
+      let citiesMatching = [];
+      for (const city of cities) {
+        if (
+          city.name.toLowerCase().includes(typedSearch.toLowerCase()) ||
+          city.continent_name.toLowerCase().includes(typedSearch.toLowerCase()) ||
+          city.country_name.toLowerCase().includes(typedSearch.toLowerCase())
+        ) {
+          citiesMatching.push(city);
+        }
+      }
+      setCitiesResult(citiesMatching);
+    }
   }, []);
 
   return (
