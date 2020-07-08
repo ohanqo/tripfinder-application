@@ -21,7 +21,7 @@ class CityService {
         minBudget,
         maxBudget,
         continent,
-        types,
+        type,
       } = filters;
 
       apiUlrFilters += "?";
@@ -30,7 +30,13 @@ class CityService {
         apiUlrFilters += `minTmp=${minTemperature}&maxTmp=${maxTemperature}&`;
       }
       if (minBudget !== 0 && maxBudget !== 0) {
-        apiUlrFilters += `minBudget=${minBudget}&maxBudget=${maxBudget}`;
+        apiUlrFilters += `minBudget=${minBudget}&maxBudget=${maxBudget}&`;
+      }
+      if(continent !== undefined){
+        apiUlrFilters += `continent=${continent}&`;
+      }
+      if(type !== undefined){
+        apiUlrFilters += `type=${type}&`;
       }
     }
 
