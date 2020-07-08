@@ -1,6 +1,14 @@
+import * as SecureStore from "expo-secure-store";
 import { StatusBar } from "expo-status-bar";
 import React, { useContext, useEffect, useState } from "react";
-import { FlatList, Image, StyleSheet, TextInput, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  TextInput,
+  View,
+  Alert,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import headerBackground from "../shared/assets/images/landscape.png";
 import LocationComponent from "../shared/components/LocationComponent";
@@ -32,9 +40,11 @@ import ArrowRight from "../shared/icons/arrow-right.svg";
 import SearchIcon from "../shared/icons/search-icon.svg";
 import CityService from "../shared/services/CityService";
 import { SERVER_URL } from "../shared/services/service";
+import { AUHTENTICATION_TOKEN } from "../shared/constants/Preferences";
 
 const HomePage = ({ navigation }) => {
   const [cities, setCities] = useState([]);
+  const [token, setToken] = useState(null);
   const { dispatch } = useContext(StoreContext);
 
   useEffect(() => {
@@ -44,10 +54,29 @@ const HomePage = ({ navigation }) => {
 
       const firstCities = response.filter((_, index) => index < 5);
       setCities(firstCities);
+
+      try {
+        setToken(await SecureStore.getItemAsync(AUHTENTICATION_TOKEN));
+      } catch (error) {
+        setToken(null);
+      }
     }
 
     fetchData();
   }, []);
+
+  const onSearchButtonPress = () => {
+    if (token === null) {
+      Alert.alert(
+        "Attention",
+        "Vous devez être connecté pour pouvoir effectuer une recherche personnalisée",
+        [{ text: "OK" }],
+        { cancelable: false },
+      );
+    } else {
+      navigation.navigate(PAGE_CHOOSE_TYPES);
+    }
+  };
 
   return (
     <View style={styles.wrapper}>
@@ -57,7 +86,7 @@ const HomePage = ({ navigation }) => {
         <SearchIcon style={styles.icon} width="20" height="20" />
         <TextInput
           style={styles.input}
-          onSubmitEditing={(e) => 
+          onSubmitEditing={(e) =>
             navigation.navigate(PAGE_SEARCH_RESULTS, {
               typedSearch: e.nativeEvent.text,
             })
@@ -109,7 +138,7 @@ const HomePage = ({ navigation }) => {
       <TouchableOpacity
         style={styles.searchButton}
         onPress={() => {
-          navigation.navigate(PAGE_CHOOSE_TYPES);
+          onSearchButtonPress();
         }}
       >
         <TextComponent style={styles.searchButtonText}>
