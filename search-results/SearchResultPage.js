@@ -17,7 +17,12 @@ const SearchResultPage = ({ route, navigation }) => {
   useEffect(() => {
     async function fetchData() {
       let response = await CityService.searchCities(filters);
-      setCitiesResult(response);
+      if (response.message !== "Request failed with status code 401") {
+        setCitiesResult(response);
+      } else {
+        setCitiesResult([]);
+      }
+
       setHasFetchedData(true);
     }
 
