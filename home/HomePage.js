@@ -86,7 +86,7 @@ const HomePage = ({ navigation }) => {
         <SearchIcon style={styles.icon} width="20" height="20" />
         <TextInput
           style={styles.input}
-          onSubmitEditing={(e) =>
+          onSubmitEditing={(e) => 
             navigation.navigate(PAGE_SEARCH_RESULTS, {
               typedSearch: e.nativeEvent.text,
             })
