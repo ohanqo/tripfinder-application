@@ -1,3 +1,4 @@
+import * as SecureStore from "expo-secure-store";
 import React, { useState } from "react";
 import {
   Dimensions,
@@ -26,8 +27,9 @@ import {
 } from "../../shared/constants/Dimens";
 import { FONT_BOLD, FONT_REGULAR } from "../../shared/constants/Fonts";
 import { PAGE_NAVBAR, PAGE_REGISTER } from "../../shared/constants/Pages";
+import { AUHTENTICATION_TOKEN } from "../../shared/constants/Preferences";
 import extractError from "../../shared/utils/ExtractErrorMessage";
-import AuthenticationRepository from "../AuthenticationRepository";
+import AuthenticationService from "../AuthenticationService";
 
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -38,10 +40,14 @@ const LoginPage = ({ navigation }) => {
     const dto = { email, password };
 
     try {
-      const response = await AuthenticationRepository.login(dto);
+      const response = await AuthenticationService.login(dto);
       const potentialErrors = response?.response?.data?.errors ?? null;
 
       if (response?.access_token) {
+        await SecureStore.setItemAsync(
+          AUHTENTICATION_TOKEN,
+          response.access_token,
+        );
         navigation.replace(PAGE_NAVBAR);
       } else {
         setErrorMessage(extractError(potentialErrors));

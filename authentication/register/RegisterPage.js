@@ -27,7 +27,7 @@ import {
 import { FONT_BOLD, FONT_REGULAR } from "../../shared/constants/Fonts";
 import { PAGE_LOGIN } from "../../shared/constants/Pages";
 import extractError from "../../shared/utils/ExtractErrorMessage";
-import AuthenticationRepository from "../AuthenticationRepository";
+import AuthenticationService from "../AuthenticationService";
 
 const RegisterPage = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -43,7 +43,7 @@ const RegisterPage = ({ navigation }) => {
     };
 
     try {
-      const response = await AuthenticationRepository.register(dto);
+      const response = await AuthenticationService.register(dto);
       const potentialErrors = response?.response?.data?.errors ?? null;
 
       if (potentialErrors) {
