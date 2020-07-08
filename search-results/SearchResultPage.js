@@ -1,8 +1,18 @@
-import React, { useEffect } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React, { useEffect, useState } from "react";
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  ImageBackground,
+  Image,
+} from "react-native";
+import { TouchableOpacity, FlatList } from "react-native-gesture-handler";
 import TextComponent from "../shared/components/TextComponent";
-import { COLOR_PRIMARY, COLOR_WHITE } from "../shared/constants/Colors";
+import {
+  COLOR_PRIMARY,
+  COLOR_WHITE,
+  COLOR_BLACK,
+} from "../shared/constants/Colors";
 import {
   FONT_LARGER,
   SPACING_LARGE,
@@ -10,97 +20,161 @@ import {
   SPACING_MEDIUM,
   SPACING_NORMAL,
   SPACING_SMALLER,
+  FONT_HEADLINE,
+  SPACING_SMALL,
+  FONT_LARGE,
+  FONT_SMALL,
+  SPACING_TINY,
 } from "../shared/constants/Dimens";
 import { FONT_BOLD } from "../shared/constants/Fonts";
-import BackIcon from "../shared/icons/back-icon.svg";
+import travelImage from "../shared/assets/images/travel.jpg";
 import CityService from "../shared/services/CityService";
+import GoBackComponent from "../shared/components/GoBackComponent";
+import { StatusBar } from "expo-status-bar";
+import { LinearGradient } from "expo-linear-gradient";
+import { SERVER_URL } from "../shared/services/service";
+import { LocationIcon } from "../shared/icons/location-icon.svg";
+import LocationComponent from "../shared/components/LocationComponent";
 
 const SearchResultPage = ({ route, navigation }) => {
   let { filters } = route.params;
+  const [citiesResult, setCitiesResult] = useState([]);
 
   useEffect(() => {
-    //console.log(filters);
-
     async function fetchData() {
       let response = await CityService.searchCities(filters);
-      console.log(response);
+      setCitiesResult(response);
     }
+
     fetchData();
-    
   }, []);
 
   return (
     <View style={styles.globalWrapper}>
-      <View style={styles.headerWrapper}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <BackIcon width={SPACING_MEDIUM} height={SPACING_MEDIUM} />
-        </TouchableOpacity>
-        <TextComponent style={styles.headline}>
-          Résultats de votre recherche
-        </TextComponent>
-      </View>
+      <StatusBar style="light" />
+      <ImageBackground
+        source={travelImage}
+        style={styles.backgroundHeaderImage}
+        imageStyle={styles.backgroundHeaderImage}
+      >
+        <View style={styles.darkerBackground}>
+          <GoBackComponent
+            style={styles.backButton}
+            isWhite={true}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+          <LinearGradient
+            colors={["transparent", "rgba(0,0.2,0.5,0.8)"]}
+            style={styles.typeInfoLineWrapper}
+          >
+            <TextComponent style={styles.headline}>
+              Résultat de votre recherche
+            </TextComponent>
+          </LinearGradient>
+        </View>
+      </ImageBackground>
+
+      <FlatList
+        data={citiesResult}
+        horizontal={false}
+        scrollEnabled={true}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={styles.flatList}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <TouchableOpacity style={styles.cityWrapper}>
+            <Image
+              style={styles.cityPicture}
+              source={{ uri: `${SERVER_URL}${item.filename}` }}
+            />
+          <View style={styles.cityInfoWrapper}>
+            <View style={styles.cityLineWrapper}>
+              <TextComponent style={styles.cityName}>{item.name}</TextComponent>
+              <LocationComponent
+                isWhite={false}
+                locationName={item.country_name}
+              />
+            </View>
+            <View style={styles.cityLineWrapper}>
+              <TextComponent style={styles.cityName}>
+                {item.temperature}°C
+              </TextComponent>
+              <TextComponent style={styles.continentName}>{item.continent_name}</TextComponent>
+            </View>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   globalWrapper: {
-    marginTop: SPACING_LARGE,
     flex: 1,
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
   },
-  backButton: {
-    alignSelf: "flex-start",
-    paddingRight: SPACING_NORMAL,
+  backgroundHeaderImage: {
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").width / 2,
   },
-  headerWrapper: {
+  backButton: {
+    paddingStart: SPACING_NORMAL,
+  },
+  darkerBackground: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.2)",
     display: "flex",
-    width: "100%",
-    flexDirection: "row",
-    paddingHorizontal: SPACING_NORMAL,
+    flexDirection: "column",
     justifyContent: "space-between",
-    alignItems: "center",
+    paddingTop: SPACING_LARGER,
   },
   headline: {
     fontSize: FONT_LARGER,
-    textAlign: "center",
-    marginVertical: SPACING_LARGE,
-    marginRight: SPACING_LARGER,
-    paddingRight: SPACING_LARGE,
+    fontFamily: FONT_BOLD,
+    color: COLOR_WHITE,
+    fontSize: FONT_HEADLINE,
+    paddingBottom: SPACING_LARGE,
+    paddingStart: SPACING_NORMAL,
+    marginTop: SPACING_LARGER,
   },
-  continentsWrapper: {
-    display: "flex",
-    width: "100%",
-    paddingHorizontal: SPACING_NORMAL,
+  flatList: {
+    justifyContent: "center",
   },
-  continentWrapper: {
+  cityWrapper: {
+    borderRadius: SPACING_NORMAL,
+    overflow: "hidden",
+    backgroundColor: COLOR_WHITE,
+    marginTop: SPACING_LARGE,
+    padding: SPACING_MEDIUM,
+  },
+  cityPicture: {
+    width: Dimensions.get("window").width - 90,
+    height: Dimensions.get("window").width / 2 - 30,
+    borderRadius: SPACING_SMALL,
+  },
+  cityInfoWrapper: {
+    paddingVertical: SPACING_SMALL,  
+  },
+  cityLineWrapper: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: SPACING_NORMAL,
+    marginTop: SPACING_TINY,
   },
-  continentName: {},
-  button: {
-    backgroundColor: COLOR_PRIMARY,
-    marginBottom: SPACING_NORMAL,
-    paddingVertical: SPACING_NORMAL,
-    paddingHorizontal: SPACING_LARGE,
-    borderRadius: SPACING_SMALLER,
-    marginHorizontal: SPACING_NORMAL,
-    width: Dimensions.get("window").width - SPACING_LARGER,
-  },
-  buttonText: {
-    color: COLOR_WHITE,
+  cityName: {
     fontFamily: FONT_BOLD,
-    textAlign: "center",
+    fontSize: FONT_LARGE,
+  },
+  continentName: {
+    fontFamily: FONT_BOLD,
+    fontSize: FONT_SMALL,
+    color: COLOR_PRIMARY,
   },
 });
 

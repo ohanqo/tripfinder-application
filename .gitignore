@@ -7,3 +7,5 @@ node_modules/**/*
 yarn-error.log
 
 web-build/register-service-worker.js
+
+.expo/settings.json
