@@ -31,11 +31,7 @@ const TypeItemComponent = ({ onPress, item }) => {
             style={styles.typeInfoLineWrapper}
           >
             <TextComponent style={styles.typeLabel}>{item.name}</TextComponent>
-            {item.selected ? (
-              <ChecBoxChecked width="20" height="20" />
-            ) : (
-              <ChecBoxUnchecked width="20" height="20" />
-            )}
+            
           </LinearGradient>
         </View>
       </ImageBackground>

@@ -17,7 +17,7 @@ import { PAGE_CHOOSE_CONTINENT } from "../shared/constants/Pages";
 import SliderLabelsComponent from "./SliderLabelsComponent";
 
 const ChooseBudgetPage = ({ route, navigation }) => {
-  const [minBudget, setMinBudget] = useState(0);
+  const [minBudget, setMinBudget] = useState(10);
   const [maxBudget, setMaxBudget] = useState(600);
   let { filters } = route.params;
 
@@ -43,8 +43,9 @@ const ChooseBudgetPage = ({ route, navigation }) => {
 
       <MultiSlider
         enableLabel={true}
-        values={[0, 600]}
+        values={[10, 600]}
         max={600}
+        min={10}
         customLabel={(e) => {
           return <SliderLabelsComponent props={e} isEuros={true} />;
         }}

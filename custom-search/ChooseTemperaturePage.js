@@ -1,5 +1,5 @@
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import HeaderComponent from "../shared/components/HeaderComponent";
@@ -17,7 +17,7 @@ import { PAGE_CHOOSE_BUDGET } from "../shared/constants/Pages";
 import SliderLabelsComponent from "./SliderLabelsComponent";
 
 const ChooseTemperaturePage = ({ route, navigation }) => {
-  const [minTemperature, setMinTemperature] = useState(0);
+  const [minTemperature, setMinTemperature] = useState(1);
   const [maxTemperature, setMaxTemperature] = useState(40);
   let { filters } = route.params;
 
@@ -43,8 +43,9 @@ const ChooseTemperaturePage = ({ route, navigation }) => {
 
       <MultiSlider
         enableLabel={true}
-        values={[0, 40]}
+        values={[1, 40]}
         max={40}
+        min={1}
         customLabel={(e) => {
           return <SliderLabelsComponent props={e} isEuros={false} />;
         }}

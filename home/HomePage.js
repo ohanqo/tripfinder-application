@@ -24,6 +24,7 @@ import {
   PAGE_CHOOSE_TYPES,
   PAGE_DESTINATION_DETAIL,
   PAGE_DESTINATION_LIST,
+  PAGE_SEARCH_RESULTS,
 } from "../shared/constants/Pages";
 import { SET_CITIES } from "../shared/constants/Types";
 import { StoreContext } from "../shared/context/Context";
@@ -54,7 +55,15 @@ const HomePage = ({ navigation }) => {
       <TextComponent style={styles.headline}>Découverte</TextComponent>
       <View style={styles.inputWrapper}>
         <SearchIcon style={styles.icon} width="20" height="20" />
-        <TextInput style={styles.input} placeholder="Où voulez vous aller ?" />
+        <TextInput
+          style={styles.input}
+          onSubmitEditing={(e) => 
+            navigation.navigate(PAGE_SEARCH_RESULTS, {
+              typedSearch: e.nativeEvent.text,
+            })
+          }
+          placeholder="Où voulez vous aller ?"
+        />
       </View>
 
       <View style={styles.forYouWrapper}>
