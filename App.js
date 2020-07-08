@@ -34,8 +34,10 @@ import {
   PAGE_ONBOARDING,
   PAGE_REGISTER,
   PAGE_SEARCH_RESULTS,
+  PAGE_CREATE_CITY,
 } from "./shared/constants/Pages";
 import { StoreProvider } from "./shared/context/Context";
+import CreateCityPage from "./create-city/CreateCityPage";
 
 const Stack = createStackNavigator();
 
@@ -97,6 +99,7 @@ export const App = () => {
             />
             <Stack.Screen name={PAGE_REGISTER} component={RegisterPage} />
             <Stack.Screen name={PAGE_LOGIN} component={LoginPage} />
+            <Stack.Screen name={PAGE_CREATE_CITY} component={CreateCityPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </StoreProvider>

@@ -43,7 +43,7 @@ const ProfilePage = ({ navigation }) => {
         </TextComponent>
       </ImageBackground>
       {state.user !== undefined ? (
-        <ConnectedComponent user={state.user} />
+        <ConnectedComponent user={state.user} navigation={navigation}/>
       ) : (
         <DisconnectedComponent navigation={navigation} />
       )}

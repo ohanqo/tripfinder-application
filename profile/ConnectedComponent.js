@@ -19,8 +19,9 @@ import { FONT_BOLD } from "../shared/constants/Fonts";
 import { AUHTENTICATION_TOKEN } from "../shared/constants/Preferences";
 import { SET_USER } from "../shared/constants/Types";
 import { StoreContext } from "../shared/context/Context";
+import { PAGE_CREATE_CITY } from "../shared/constants/Pages";
 
-const ConnectedComponent = ({ user }) => {
+const ConnectedComponent = ({ user, navigation }) => {
   const { dispatch } = useContext(StoreContext);
 
   const disconnectUser = async () => {
@@ -43,7 +44,7 @@ const ConnectedComponent = ({ user }) => {
         <TouchableOpacity
           style={styles.createCityButton}
           onPress={() => {
-            null;
+            navigation.navigate(PAGE_CREATE_CITY)
           }}
         >
           <TextComponent style={styles.buttonText}>
