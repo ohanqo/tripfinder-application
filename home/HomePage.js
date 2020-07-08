@@ -20,14 +20,17 @@ import {
   SPACING_SMALLER,
 } from "../shared/constants/Dimens";
 import { FONT_BOLD, FONT_LIGHT, FONT_MEDIUM } from "../shared/constants/Fonts";
-import { PAGE_DESTINATION_LIST } from "../shared/constants/Pages";
+import {
+  PAGE_CHOOSE_TYPES,
+  PAGE_DESTINATION_DETAIL,
+  PAGE_DESTINATION_LIST,
+} from "../shared/constants/Pages";
 import { SET_CITIES } from "../shared/constants/Types";
 import { StoreContext } from "../shared/context/Context";
 import ArrowRight from "../shared/icons/arrow-right.svg";
 import SearchIcon from "../shared/icons/search-icon.svg";
 import CityService from "../shared/services/CityService";
 import { SERVER_URL } from "../shared/services/service";
-import { PAGE_CHOOSE_TYPES } from "../shared/constants/Pages";
 
 const HomePage = ({ navigation }) => {
   const [cities, setCities] = useState([]);
@@ -73,7 +76,14 @@ const HomePage = ({ navigation }) => {
         keyExtractor={(item) => item.id.toString()}
         style={styles.flatlist}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.cityCard}>
+          <TouchableOpacity
+            style={styles.cityCard}
+            onPress={() =>
+              navigation.navigate(PAGE_DESTINATION_DETAIL, {
+                destination: item,
+              })
+            }
+          >
             <Image
               style={styles.cityPicture}
               source={{ uri: `${SERVER_URL}${item.filename}` }}
@@ -87,7 +97,12 @@ const HomePage = ({ navigation }) => {
         )}
       />
 
-      <TouchableOpacity style={styles.searchButton} onPress={() => {navigation.navigate(PAGE_CHOOSE_TYPES)}}>
+      <TouchableOpacity
+        style={styles.searchButton}
+        onPress={() => {
+          navigation.navigate(PAGE_CHOOSE_TYPES);
+        }}
+      >
         <TextComponent style={styles.searchButtonText}>
           Recherche personnalisée
         </TextComponent>
@@ -172,7 +187,7 @@ const styles = StyleSheet.create({
     color: COLOR_GREY,
   },
   flatlist: {
-    paddingLeft: 10,
+    paddingHorizontal: 10,
   },
   cityCard: {
     padding: 10,
