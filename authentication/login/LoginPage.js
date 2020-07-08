@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  KeyboardAvoidingView,
 } from "react-native";
 import LoginBackgroundImage from "../../shared/assets/images/login-background.jpg";
 import GoBackComponent from "../../shared/components/GoBackComponent";
@@ -71,7 +72,10 @@ const LoginPage = ({ navigation }) => {
           onPress={navigation.goBack}
         />
 
-        <View style={styles.loginLayer}>
+        <KeyboardAvoidingView
+          style={styles.loginLayer}
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
           <TextComponent style={styles.loginTitle}>Connexion</TextComponent>
 
           <TextInput
@@ -111,7 +115,7 @@ const LoginPage = ({ navigation }) => {
               Créer un compte
             </TextComponent>
           </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
       </ImageBackground>
     </View>
   );
@@ -191,6 +195,7 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING_NORMAL,
     paddingHorizontal: SPACING_LARGE,
     borderRadius: SPACING_SMALLER,
+    marginBottom: SPACING_LARGER,
   },
   loginRegisterButtonText: {
     color: COLOR_WHITE,

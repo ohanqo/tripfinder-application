@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  KeyboardAvoidingView,
 } from "react-native";
 import RegisterBackgroundImage from "../../shared/assets/images/register-background.jpg";
 import GoBackComponent from "../../shared/components/GoBackComponent";
@@ -70,7 +71,10 @@ const RegisterPage = ({ navigation }) => {
           onPress={navigation.goBack}
         />
 
-        <View style={styles.registerLayer}>
+        <KeyboardAvoidingView
+          style={styles.registerLayer}
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
           <TextComponent style={styles.registerTitle}>
             Créer un compte
           </TextComponent>
@@ -125,7 +129,7 @@ const RegisterPage = ({ navigation }) => {
               </TextComponent>
             </TouchableOpacity>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </ImageBackground>
     </View>
   );
@@ -198,6 +202,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignSelf: "center",
+    marginBottom: SPACING_LARGER,
   },
   registerAlreadyAnAccountText: {
     color: COLOR_GHOST,
