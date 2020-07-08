@@ -30,10 +30,10 @@ const ChooseContinentPage = ({ route, navigation }) => {
   }, []);
 
   const goToResults = () => {
-    if(selectedContinent !== 0){
+    if (selectedContinent !== 0) {
       filters.continent = continents[selectedContinent];
     }
-    
+
     navigation.navigate(PAGE_SEARCH_RESULTS, { filters: filters });
   };
 
@@ -53,7 +53,7 @@ const ChooseContinentPage = ({ route, navigation }) => {
         >
           {continents.map((item) => {
             return (
-              <Picker.Item label={item} value={continents.indexOf(item)} />
+              <Picker.Item key={continents.indexOf(item).toString()} label={item} value={continents.indexOf(item)} />
             );
           })}
         </Picker>

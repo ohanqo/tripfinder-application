@@ -11,7 +11,6 @@ class CityService {
   }
 
   static async searchCities(filters) {
-    console.log(filters);
     let apiUlrFilters = "/search";
 
     if (filters !== undefined) {
@@ -32,10 +31,10 @@ class CityService {
       if (minBudget !== 0 && maxBudget !== 0) {
         apiUlrFilters += `minBudget=${minBudget}&maxBudget=${maxBudget}&`;
       }
-      if(continent !== undefined){
+      if (continent !== undefined) {
         apiUlrFilters += `continent=${continent}&`;
       }
-      if(type !== undefined){
+      if (type !== undefined) {
         apiUlrFilters += `type=${type}&`;
       }
     }

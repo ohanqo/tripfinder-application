@@ -6,22 +6,24 @@ import { StatusBar } from "expo-status-bar";
 import { StoreContext } from "../shared/context/Context";
 import SearchHeader from "./SearchHeader";
 import CityItemComponent from "./CityItemComponent";
+import NotFoundComponent from "./NotFoundComponent";
 
 const SearchResultPage = ({ route, navigation }) => {
   let { filters, typedSearch } = route.params;
   const [citiesResult, setCitiesResult] = useState([]);
+  const [hasFetchedData, setHasFetchedData] = useState(false);
   const { state } = useContext(StoreContext);
 
   useEffect(() => {
     async function fetchData() {
       let response = await CityService.searchCities(filters);
       setCitiesResult(response);
+      setHasFetchedData(true);
     }
 
     if (filters !== undefined) {
       fetchData();
     } else {
-      console.log(typedSearch);
       const cities = JSON.parse(JSON.stringify(state.cities));
       let citiesMatching = [];
       for (const city of cities) {
@@ -36,6 +38,7 @@ const SearchResultPage = ({ route, navigation }) => {
         }
       }
       setCitiesResult(citiesMatching);
+      setHasFetchedData(true);
     }
   }, []);
 
@@ -43,18 +46,22 @@ const SearchResultPage = ({ route, navigation }) => {
     <View style={styles.globalWrapper}>
       <StatusBar style="light" />
 
-      <FlatList
-        data={citiesResult}
-        ListHeaderComponent={<SearchHeader navigation={navigation} />}
-        horizontal={false}
-        scrollEnabled={true}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={styles.flatList}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <CityItemComponent navigation={navigation} city={item} />
-        )}
-      />
+      {citiesResult.length === 0 && hasFetchedData ? (
+        <NotFoundComponent navigation={navigation} />
+      ) : (
+        <FlatList
+          data={citiesResult}
+          ListHeaderComponent={<SearchHeader navigation={navigation} />}
+          horizontal={false}
+          scrollEnabled={true}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={styles.flatList}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <CityItemComponent navigation={navigation} city={item} />
+          )}
+        />
+      )}
     </View>
   );
 };
