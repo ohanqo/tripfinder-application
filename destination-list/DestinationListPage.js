@@ -1,18 +1,31 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import GoBackComponent from "../shared/components/GoBackComponent";
 import TextComponent from "../shared/components/TextComponent";
-import { COLOR_PRIMARY } from "../shared/constants/Colors";
-import { FONT_HEADLINE } from "../shared/constants/Dimens";
-import { PAGE_DESTINATION_DETAIL } from "../shared/constants/Pages";
+import {
+  COLOR_GHOST,
+  COLOR_PRIMARY,
+  COLOR_WHITE,
+} from "../shared/constants/Colors";
+import {
+  FONT_HEADLINE,
+  SPACING_LARGE,
+  SPACING_LARGER,
+  SPACING_NORMAL,
+} from "../shared/constants/Dimens";
+import {
+  PAGE_DESTINATION_DETAIL,
+  PAGE_DESTINATION_FORM,
+} from "../shared/constants/Pages";
 import { StoreContext } from "../shared/context/Context";
 import DestinationItemComponent from "./DestinationItemComponent";
 
 const DestinationListPage = ({ navigation }) => {
   const [leftCities, setLeftCities] = useState([]);
   const [rightCities, setRightCities] = useState([]);
+  const [isEditMode, setIsEditMode] = useState(false);
   const { state } = useContext(StoreContext);
 
   useEffect(() => {
@@ -25,7 +38,10 @@ const DestinationListPage = ({ navigation }) => {
   }, []);
 
   const onItemClick = (item) => {
-    navigation.navigate(PAGE_DESTINATION_DETAIL, { destination: item });
+    navigation.navigate(
+      isEditMode ? PAGE_DESTINATION_FORM : PAGE_DESTINATION_DETAIL,
+      { destination: item },
+    );
   };
 
   return (
@@ -39,6 +55,33 @@ const DestinationListPage = ({ navigation }) => {
           </TextComponent>
           , voici nos meilleures destinations
         </TextComponent>
+
+        {state?.user?.is_admin ? (
+          <View style={styles.modeSelectorWrapper}>
+            <TouchableOpacity onPress={() => setIsEditMode(!isEditMode)}>
+              <TextComponent
+                style={
+                  isEditMode
+                    ? styles.notSelectedModeButton
+                    : styles.selectedModeButton
+                }
+              >
+                Mode consultation
+              </TextComponent>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setIsEditMode(!isEditMode)}>
+              <TextComponent
+                style={
+                  isEditMode
+                    ? styles.selectedModeButton
+                    : styles.notSelectedModeButton
+                }
+              >
+                Mode édition
+              </TextComponent>
+            </TouchableOpacity>
+          </View>
+        ) : null}
 
         <View style={styles.destinationWrapper}>
           <View style={styles.listWrapper}>
@@ -89,6 +132,26 @@ const styles = StyleSheet.create({
   headlineColorized: {
     fontSize: FONT_HEADLINE,
     color: COLOR_PRIMARY,
+  },
+  modeSelectorWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: SPACING_LARGER,
+  },
+  selectedModeButton: {
+    backgroundColor: COLOR_PRIMARY,
+    color: COLOR_WHITE,
+    padding: SPACING_NORMAL,
+    borderRadius: SPACING_LARGE,
+    overflow: "hidden",
+  },
+
+  notSelectedModeButton: {
+    backgroundColor: COLOR_GHOST,
+    padding: SPACING_NORMAL,
+    borderRadius: SPACING_LARGE,
+    overflow: "hidden",
   },
   destinationWrapper: {
     display: "flex",

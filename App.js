@@ -12,6 +12,7 @@ import ChooseContinentPage from "./custom-search/ChooseContinentPage";
 import ChooseTemperaturePage from "./custom-search/ChooseTemperaturePage";
 import ChooseTypesPage from "./custom-search/types/ChooseTypesPage";
 import DestinationDetailPage from "./destination-detail/DestinationDetailPage";
+import DestinationFormPage from "./destination-form/DestinationFormPage";
 import DestinationListPage from "./destination-list/DestinationListPage";
 import NavBar from "./navbar/NavBar";
 import OnboardingPage from "./onboarding/OnboardingPage";
@@ -28,16 +29,15 @@ import {
   PAGE_CHOOSE_TEMPERATURE,
   PAGE_CHOOSE_TYPES,
   PAGE_DESTINATION_DETAIL,
+  PAGE_DESTINATION_FORM,
   PAGE_DESTINATION_LIST,
   PAGE_LOGIN,
   PAGE_NAVBAR,
   PAGE_ONBOARDING,
   PAGE_REGISTER,
   PAGE_SEARCH_RESULTS,
-  PAGE_CREATE_CITY,
 } from "./shared/constants/Pages";
 import { StoreProvider } from "./shared/context/Context";
-import CreateCityPage from "./create-city/CreateCityPage";
 
 const Stack = createStackNavigator();
 
@@ -99,7 +99,10 @@ export const App = () => {
             />
             <Stack.Screen name={PAGE_REGISTER} component={RegisterPage} />
             <Stack.Screen name={PAGE_LOGIN} component={LoginPage} />
-            <Stack.Screen name={PAGE_CREATE_CITY} component={CreateCityPage} />
+            <Stack.Screen
+              name={PAGE_DESTINATION_FORM}
+              component={DestinationFormPage}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </StoreProvider>
