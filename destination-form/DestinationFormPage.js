@@ -172,6 +172,28 @@ const DestinationFormPage = ({ navigation, route }) => {
     }
   };
 
+  const confirmDeleteCity = () => {
+    Alert.alert(
+      "Attention",
+      "Êtes-vous sûr de vouloir supprimer cette destination ?",
+      [{ text: "Oui", onPress: () => deleteCity() }],
+      { cancelable: true },
+    );
+  };
+
+  const deleteCity = async () => {
+    try {
+      if (destination?.id) {
+        await CityService.deleteCity(destination.id);
+        const response = await CityService.getCities();
+        dispatch({ type: SET_CITIES, payload: response });
+        navigation.navigate(PAGE_HOME);
+      }
+    } catch (error) {
+      setErrorMessage("Une erreur est survenue");
+    }
+  };
+
   const getSelectedTypes = () => {
     return types.filter((item) => item.selected).map((item) => item.id);
   };
@@ -331,6 +353,17 @@ const DestinationFormPage = ({ navigation, route }) => {
                 {messages.confirm}
               </TextComponent>
             </TouchableOpacity>
+
+            {isAnEdition() ? (
+              <TouchableOpacity
+                style={styles.formDeleteButton}
+                onPress={confirmDeleteCity}
+              >
+                <TextComponent style={styles.formDeleteButtonText}>
+                  Suppresssion de la destination
+                </TextComponent>
+              </TouchableOpacity>
+            ) : null}
           </ScrollView>
         </KeyboardAvoidingView>
       </ImageBackground>
@@ -401,8 +434,24 @@ const styles = StyleSheet.create({
     borderRadius: SPACING_SMALLER,
     borderColor: COLOR_PRIMARY,
   },
+  formDeleteButton: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    backgroundColor: COLOR_WHITE,
+    marginBottom: SPACING_LARGER,
+    paddingVertical: SPACING_NORMAL,
+    paddingHorizontal: SPACING_LARGE,
+    borderWidth: 2,
+    borderRadius: SPACING_SMALLER,
+    borderColor: COLOR_ERROR,
+  },
   formButtonText: {
     color: COLOR_PRIMARY,
+    fontFamily: FONT_BOLD,
+  },
+  formDeleteButtonText: {
+    color: COLOR_ERROR,
     fontFamily: FONT_BOLD,
   },
   formRegisterButton: {
