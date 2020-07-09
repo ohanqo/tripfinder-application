@@ -5,17 +5,20 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import GoBackComponent from "../shared/components/GoBackComponent";
 import TextComponent from "../shared/components/TextComponent";
 import {
+  COLOR_GHOST,
   COLOR_PRIMARY,
   COLOR_WHITE,
-  COLOR_GREY_DIABLED,
 } from "../shared/constants/Colors";
 import {
   FONT_HEADLINE,
-  SPACING_NORMAL,
   SPACING_LARGE,
   SPACING_LARGER,
+  SPACING_NORMAL,
 } from "../shared/constants/Dimens";
-import { PAGE_DESTINATION_DETAIL } from "../shared/constants/Pages";
+import {
+  PAGE_DESTINATION_DETAIL,
+  PAGE_DESTINATION_FORM,
+} from "../shared/constants/Pages";
 import { StoreContext } from "../shared/context/Context";
 import DestinationItemComponent from "./DestinationItemComponent";
 
@@ -35,7 +38,10 @@ const DestinationListPage = ({ navigation }) => {
   }, []);
 
   const onItemClick = (item) => {
-    navigation.navigate(isEditMode? null/* mettre ici le nom de la page  */ : PAGE_DESTINATION_DETAIL, { destination: item });
+    navigation.navigate(
+      isEditMode ? PAGE_DESTINATION_FORM : PAGE_DESTINATION_DETAIL,
+      { destination: item },
+    );
   };
 
   return (
@@ -142,7 +148,7 @@ const styles = StyleSheet.create({
   },
 
   notSelectedModeButton: {
-    backgroundColor: COLOR_GREY_DIABLED,
+    backgroundColor: COLOR_GHOST,
     padding: SPACING_NORMAL,
     borderRadius: SPACING_LARGE,
     overflow: "hidden",

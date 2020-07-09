@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Alert,
   Dimensions,
@@ -38,6 +38,8 @@ import {
 } from "../shared/constants/Dimens";
 import { FONT_BOLD, FONT_REGULAR } from "../shared/constants/Fonts";
 import { PAGE_HOME } from "../shared/constants/Pages";
+import { SET_CITIES } from "../shared/constants/Types";
+import { StoreContext } from "../shared/context/Context";
 import ChecBoxChecked from "../shared/icons/checkBox-checked.svg";
 import ChecBoxUnchecked from "../shared/icons/checkBox-unchecked.svg";
 import CityService from "../shared/services/CityService";
@@ -56,22 +58,41 @@ const editMessages = {
   confirm: "Mise à jour de la destination",
 };
 
-const DestinationFormPage = ({ navigation, destination = null }) => {
+const DestinationFormPage = ({ navigation, route }) => {
+  const destination = route.params?.destination;
+  const isAnEdition = () => destination?.id !== undefined;
+
+  const retrieveDestinationTypes = () => {
+    const defaultTypes = [
+      { id: 1, name: "Montagne", selected: false, image: mountain },
+      { id: 2, name: "Plage", selected: false, image: beach },
+      { id: 3, name: "Vie Nocturne", selected: false, image: nightLiving },
+      { id: 4, name: "Culture", selected: false, image: culture },
+      { id: 5, name: "Sport", selected: false, image: sport },
+    ];
+
+    if (isAnEdition()) {
+      const selectedTypes = destination?.types.map((item) => item.id) ?? [];
+
+      return defaultTypes.map((item) => {
+        item.selected = selectedTypes.includes(item.id) ? true : false;
+        return item;
+      });
+    }
+
+    return defaultTypes;
+  };
+
   const [countries, setCountries] = useState([]);
   const [name, setName] = useState(destination?.name);
   const [countryId, setCountryId] = useState(0);
-  const [budget, setBudget] = useState(0);
-  const [temperature, setTemperature] = useState(0);
-  const [description, setDescription] = useState(0);
-  const [types, setTypes] = useState([
-    { id: 1, name: "Montagne", selected: false, image: mountain },
-    { id: 2, name: "Plage", selected: false, image: beach },
-    { id: 3, name: "Vie Nocturne", selected: false, image: nightLiving },
-    { id: 4, name: "Culture", selected: false, image: culture },
-    { id: 5, name: "Sport", selected: false, image: sport },
-  ]);
+  const [budget, setBudget] = useState(destination?.budget);
+  const [temperature, setTemperature] = useState(destination?.temperature);
+  const [description, setDescription] = useState(destination?.description);
+  const [types, setTypes] = useState(retrieveDestinationTypes());
 
   const [errorMessage, setErrorMessage] = useState();
+  const { dispatch } = useContext(StoreContext);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -81,6 +102,22 @@ const DestinationFormPage = ({ navigation, destination = null }) => {
 
     fetchCountries();
   }, []);
+
+  useEffect(() => {
+    const findDestinationCountryId = () => {
+      return (
+        countries.find(
+          (item) =>
+            item.name.toLowerCase() === destination?.country_name.toLowerCase(),
+        )?.id ?? 0
+      );
+    };
+
+    if (isAnEdition()) {
+      const destinationCountryId = findDestinationCountryId();
+      setCountryId(destinationCountryId);
+    }
+  }, [countries]);
 
   const displayWipAlert = () => {
     Alert.alert(
@@ -100,26 +137,16 @@ const DestinationFormPage = ({ navigation, destination = null }) => {
   };
 
   const postCity = async () => {
-    const selectedTypes = types
-      .filter((item) => item.selected)
-      .map((item) => item.id);
-
-    const dto = {
-      country_id: countryId,
-      name,
-      budget,
-      temperature,
-      description,
-      types: selectedTypes,
-    };
-
     try {
+      const dto = getCityDto();
       const response = await CityService.postCity(dto);
       const potentialErrors = response?.response?.data?.errors ?? null;
 
       if (potentialErrors) {
         setErrorMessage(extractError(potentialErrors));
       } else {
+        const response = await CityService.getCities();
+        dispatch({ type: SET_CITIES, payload: response });
         navigation.navigate(PAGE_HOME);
       }
     } catch (error) {
@@ -127,7 +154,46 @@ const DestinationFormPage = ({ navigation, destination = null }) => {
     }
   };
 
-  const isAnEdition = () => destination?.id !== undefined;
+  const editCity = async () => {
+    try {
+      const dto = getCityDto();
+      const response = await CityService.patchCity(destination.id, dto);
+      const potentialErrors = response?.response?.data?.errors ?? null;
+
+      if (potentialErrors) {
+        setErrorMessage(extractError(potentialErrors));
+      } else {
+        const response = await CityService.getCities();
+        dispatch({ type: SET_CITIES, payload: response });
+        navigation.navigate(PAGE_HOME);
+      }
+    } catch (error) {
+      setErrorMessage("Une erreur est survenue");
+    }
+  };
+
+  const getSelectedTypes = () => {
+    return types.filter((item) => item.selected).map((item) => item.id);
+  };
+
+  const getCityDto = () => {
+    return {
+      country_id: countryId,
+      name,
+      budget,
+      temperature,
+      description,
+      types: getSelectedTypes(),
+    };
+  };
+
+  const onConfirmClick = () => {
+    if (isAnEdition()) {
+      editCity();
+    } else {
+      postCity();
+    }
+  };
 
   const messages = isAnEdition() ? editMessages : createMessages;
 
@@ -167,7 +233,7 @@ const DestinationFormPage = ({ navigation, destination = null }) => {
             <Picker
               style={styles.formInput}
               selectedValue={countryId}
-              onValueChange={(value) => setCountryId(value)}
+              onValueChange={(s) => setCountryId(s)}
             >
               {countries.map((item, index) => (
                 <Picker.Item
@@ -183,6 +249,7 @@ const DestinationFormPage = ({ navigation, destination = null }) => {
               style={styles.formInput}
               placeholder="Nom"
               onChangeText={(s) => setName(s)}
+              defaultValue={destination?.name}
             />
 
             <TextInput
@@ -191,6 +258,7 @@ const DestinationFormPage = ({ navigation, destination = null }) => {
               style={styles.formInput}
               placeholder="Budget"
               onChangeText={(s) => setBudget(s)}
+              defaultValue={`${destination?.budget ?? ""}`}
             />
 
             <TextInput
@@ -199,6 +267,7 @@ const DestinationFormPage = ({ navigation, destination = null }) => {
               style={styles.formInput}
               placeholder="Température"
               onChangeText={(s) => setTemperature(s)}
+              defaultValue={`${destination?.temperature ?? ""}`}
             />
 
             <TextInput
@@ -208,6 +277,7 @@ const DestinationFormPage = ({ navigation, destination = null }) => {
               numberOfLines={1}
               placeholder="Description"
               onChangeText={(s) => setDescription(s)}
+              defaultValue={destination?.description}
             />
 
             <TextComponent style={styles.typesTitle}>
@@ -253,7 +323,10 @@ const DestinationFormPage = ({ navigation, destination = null }) => {
 
             <View style={styles.formSpacing} />
 
-            <TouchableOpacity style={styles.formButton} onPress={postCity}>
+            <TouchableOpacity
+              style={styles.formButton}
+              onPress={onConfirmClick}
+            >
               <TextComponent style={styles.formButtonText}>
                 {messages.confirm}
               </TextComponent>

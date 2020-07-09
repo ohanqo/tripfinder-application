@@ -19,6 +19,15 @@ class CityService {
     }
   }
 
+  static async patchCity(cityId, cityDTO) {
+    try {
+      return await AUTH_HTTP.patch(`/cities/${cityId}`, cityDTO);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+
   static async searchCities(filters) {
     let apiUlrFilters = "/search";
 
