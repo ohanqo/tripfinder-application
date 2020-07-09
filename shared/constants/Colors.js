@@ -7,4 +7,5 @@ export const COLOR_LIGHT_GREY = '#ACACAC';
 export const COLOR_GHOST = "#c2c3d2";
 export const COLOR_ERROR = "#F56565";
 export const COLOR_RED = "#CC2936";
+export const COLOR_GREY_DIABLED = "#DCDAD1";
 
