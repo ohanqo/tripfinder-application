@@ -2,12 +2,12 @@ import * as SecureStore from "expo-secure-store";
 import { StatusBar } from "expo-status-bar";
 import React, { useContext, useEffect, useState } from "react";
 import {
+  Alert,
   FlatList,
   Image,
   StyleSheet,
   TextInput,
   View,
-  Alert,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import headerBackground from "../shared/assets/images/landscape.png";
@@ -34,13 +34,14 @@ import {
   PAGE_DESTINATION_LIST,
   PAGE_SEARCH_RESULTS,
 } from "../shared/constants/Pages";
-import { SET_CITIES } from "../shared/constants/Types";
+import { AUHTENTICATION_TOKEN } from "../shared/constants/Preferences";
+import { SET_CITIES, SET_USER } from "../shared/constants/Types";
 import { StoreContext } from "../shared/context/Context";
 import ArrowRight from "../shared/icons/arrow-right.svg";
 import SearchIcon from "../shared/icons/search-icon.svg";
 import CityService from "../shared/services/CityService";
 import { SERVER_URL } from "../shared/services/service";
-import { AUHTENTICATION_TOKEN } from "../shared/constants/Preferences";
+import UserService from "../shared/services/UserService";
 
 const HomePage = ({ navigation }) => {
   const [cities, setCities] = useState([]);
@@ -51,6 +52,13 @@ const HomePage = ({ navigation }) => {
     async function fetchData() {
       const response = await CityService.getCities();
       dispatch({ type: SET_CITIES, payload: response });
+
+      const token = await SecureStore.getItemAsync(AUHTENTICATION_TOKEN);
+
+      if (token) {
+        const user = await UserService.me();
+        dispatch({ type: SET_USER, payload: user });
+      }
 
       const firstCities = response.filter((_, index) => index < 5);
       setCities(firstCities);
@@ -86,7 +94,7 @@ const HomePage = ({ navigation }) => {
         <SearchIcon style={styles.icon} width="20" height="20" />
         <TextInput
           style={styles.input}
-          onSubmitEditing={(e) => 
+          onSubmitEditing={(e) =>
             navigation.navigate(PAGE_SEARCH_RESULTS, {
               typedSearch: e.nativeEvent.text,
             })

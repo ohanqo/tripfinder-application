@@ -1,13 +1,13 @@
 import * as SecureStore from "expo-secure-store";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Dimensions,
   ImageBackground,
+  KeyboardAvoidingView,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
-  KeyboardAvoidingView,
 } from "react-native";
 import LoginBackgroundImage from "../../shared/assets/images/login-background.jpg";
 import GoBackComponent from "../../shared/components/GoBackComponent";
@@ -29,6 +29,9 @@ import {
 import { FONT_BOLD, FONT_REGULAR } from "../../shared/constants/Fonts";
 import { PAGE_NAVBAR, PAGE_REGISTER } from "../../shared/constants/Pages";
 import { AUHTENTICATION_TOKEN } from "../../shared/constants/Preferences";
+import { SET_USER } from "../../shared/constants/Types";
+import { StoreContext } from "../../shared/context/Context";
+import UserService from "../../shared/services/UserService";
 import extractError from "../../shared/utils/ExtractErrorMessage";
 import AuthenticationService from "../AuthenticationService";
 
@@ -36,6 +39,8 @@ const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const { dispatch } = useContext(StoreContext);
 
   const login = async () => {
     const dto = { email, password };
@@ -49,6 +54,10 @@ const LoginPage = ({ navigation }) => {
           AUHTENTICATION_TOKEN,
           response.access_token,
         );
+
+        const user = await UserService.me();
+        dispatch({ type: SET_USER, payload: user });
+
         navigation.replace(PAGE_NAVBAR);
       } else {
         setErrorMessage(extractError(potentialErrors));
