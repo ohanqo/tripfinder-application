@@ -26,6 +26,8 @@ const ChooseContinentPage = ({ route, navigation }) => {
       "Amérique du Nord",
       "Amérique du Sud",
       "Asie",
+      "Afrique",
+      "Océanie",
     ]);
   }, []);
 
@@ -53,7 +55,11 @@ const ChooseContinentPage = ({ route, navigation }) => {
         >
           {continents.map((item) => {
             return (
-              <Picker.Item key={continents.indexOf(item).toString()} label={item} value={continents.indexOf(item)} />
+              <Picker.Item
+                key={continents.indexOf(item).toString()}
+                label={item}
+                value={continents.indexOf(item)}
+              />
             );
           })}
         </Picker>
