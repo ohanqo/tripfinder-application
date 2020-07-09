@@ -28,6 +28,15 @@ class CityService {
     }
   }
 
+  static async deleteCity(cityId) {
+    try {
+      return await AUTH_HTTP.delete(`/cities/${cityId}`);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+
   static async searchCities(filters) {
     let apiUlrFilters = "/search";
 
