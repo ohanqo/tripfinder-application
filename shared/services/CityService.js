@@ -1,9 +1,18 @@
-import { HTTP, AUTH_HTTP } from "./service";
+import { AUTH_HTTP, HTTP } from "./service";
 
 class CityService {
   static async getCities() {
     try {
       return await HTTP.get("/cities");
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+
+  static async postCity(cityDTO) {
+    try {
+      return await AUTH_HTTP.post("/cities", cityDTO);
     } catch (error) {
       console.log(error);
       return error;

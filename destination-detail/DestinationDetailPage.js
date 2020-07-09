@@ -40,7 +40,6 @@ const layerHeight = {
 
 export default class DestinationDetailPage extends React.Component {
   state = {
-    pan: new Animated.ValueXY(),
     frontLayerHeight: new Animated.Value(layerHeight.FRONT_DEFAULT),
     middleLayerHeight: new Animated.Value(layerHeight.MIDDLE_DEFAULT),
   };

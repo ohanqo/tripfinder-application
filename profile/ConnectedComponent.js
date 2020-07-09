@@ -1,27 +1,27 @@
+import * as SecureStore from "expo-secure-store";
 import React, { useContext } from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import TextComponent from "../shared/components/TextComponent";
 import {
-  COLOR_WHITE,
-  COLOR_RED,
   COLOR_PRIMARY,
+  COLOR_RED,
+  COLOR_WHITE,
 } from "../shared/constants/Colors";
-import TravelerIcon from "../shared/icons/traveler-icon.svg";
-import MailIcon from "../shared/icons/mail-icon.svg";
-import * as SecureStore from "expo-secure-store";
 import {
   FONT_LARGER,
-  SPACING_NORMAL,
   SPACING_LARGE,
-  SPACING_SMALLER,
+  SPACING_NORMAL,
   SPACING_SMALL,
+  SPACING_SMALLER,
 } from "../shared/constants/Dimens";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { FONT_BOLD } from "../shared/constants/Fonts";
+import { PAGE_DESTINATION_FORM } from "../shared/constants/Pages";
 import { AUHTENTICATION_TOKEN } from "../shared/constants/Preferences";
 import { SET_USER } from "../shared/constants/Types";
 import { StoreContext } from "../shared/context/Context";
-import { PAGE_CREATE_CITY } from "../shared/constants/Pages";
+import MailIcon from "../shared/icons/mail-icon.svg";
+import TravelerIcon from "../shared/icons/traveler-icon.svg";
 
 const ConnectedComponent = ({ user, navigation }) => {
   const { dispatch } = useContext(StoreContext);
@@ -46,7 +46,7 @@ const ConnectedComponent = ({ user, navigation }) => {
         <TouchableOpacity
           style={styles.createCityButton}
           onPress={() => {
-            navigation.navigate(PAGE_CREATE_CITY);
+            navigation.navigate(PAGE_DESTINATION_FORM);
           }}
         >
           <TextComponent style={styles.buttonText}>
